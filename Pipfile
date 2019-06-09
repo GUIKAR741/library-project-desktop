@@ -1,0 +1,20 @@
+[[source]]
+name = "pypi"
+url = "https://pypi.org/simple"
+verify_ssl = true
+
+[dev-packages]
+pylint = "*"
+pep8 = "*"
+pydocstyle = "*"
+autopep8 = "*"
+
+[packages]
+kivy = "*"
+cython = "==0.29.9"
+pygments = "*"
+docutils = "*"
+pymysql = "*"
+
+[requires]
+python_version = "3.7"

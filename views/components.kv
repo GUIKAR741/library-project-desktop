@@ -1,0 +1,34 @@
+<MyActionBar@ActionBar>
+    pos_hint: {'top':1}
+    ActionView:
+        use_separator: True
+        ActionPrevious:
+            title: 'SYML'
+            app_icon: 'res/icon.png'
+            with_previous: root.prev
+        ActionGroup:
+            text: 'Usuarios'
+            ActionButton:
+                text: 'Livros'
+            ActionButton:
+                text: 'Exemplares'
+            ActionButton:
+                text: 'Cadastrar'
+        ActionGroup:
+            text: 'Acervo'
+            ActionButton:
+                text: 'Livros'
+            ActionButton:
+                text: 'Exemplares'
+            ActionButton:
+                text: 'Cadastrar'
+        ActionGroup:
+            text: 'Reservas'
+            ActionButton:
+                text: 'Ver Todas'
+        ActionGroup:
+            text: 'Emprestimos'
+            ActionButton:
+                text: 'Ver Todos'
+            ActionButton:
+                text: 'Cadastrar'
