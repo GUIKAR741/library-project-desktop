@@ -1,0 +1,14 @@
+<Reservas>
+    BoxLayout:
+        orientation: 'vertical'
+        canvas.before:
+            Color:
+                rgba:1,1,1,1
+            Rectangle:
+                size:self.size
+                pos:self.pos
+        MyActionBar:
+            prev: True
+            func: root.funcao
+        Button:
+            text: 'reservas'

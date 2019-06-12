@@ -1,12 +1,13 @@
 """."""
 from kivy.uix.actionbar import ActionBar
-from kivy.properties import BooleanProperty
+from kivy.properties import BooleanProperty, Property  # pylint: disable=no-name-in-module
 
 
 class MyActionBar(ActionBar):
     """."""
 
-    prev = BooleanProperty(defaultvalue=False)
+    prev = BooleanProperty(False)
+    func = Property(lambda: ...)
 
     def __init__(self, *args, **kwargs):
         """."""

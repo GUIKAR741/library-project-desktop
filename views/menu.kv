@@ -1,27 +1,37 @@
-<Menu@Screen>:
+<Menu>:
     BoxLayout:
         orientation: 'vertical'
+        canvas.before:
+            Color:
+                rgba:1,1,1,1
+            Rectangle:
+                size:self.size
+                pos:self.pos
         MyActionBar:
         BoxLayout:
             orientation: 'horizontal'
             BoxLayout:
                 orientation: 'vertical'
                 Label:
+                    color: 0, 0, 0, 1
                     text: root.emprestimos
                     halign: 'center'
             BoxLayout:
                 orientation: 'vertical'
                 Label:
+                    color: 0, 0, 0, 1
                     text: root.reservas
                     halign: 'center'
             BoxLayout:
                 orientation: 'vertical'
                 Label:
+                    color: 0, 0, 0, 1
                     text: root.livros
                     halign: 'center'
             BoxLayout:
                 orientation: 'vertical'
                 Label:
+                    color: 0, 0, 0, 1
                     text: root.usuarios
                     halign: 'center'
 
