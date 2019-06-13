@@ -7,9 +7,9 @@ from kivy.core.window import Window
 class Tela(Screen):
     """."""
 
-    def __init__(self, *args, **kwargs):
-        """."""
-        super().__init__(*args, **kwargs)
+    # def __init__(self, *args, **kwargs):
+    #     """."""
+    #     super().__init__(*args, **kwargs)
 
     def funcao(self):
         """."""

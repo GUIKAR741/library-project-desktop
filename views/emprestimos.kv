@@ -10,5 +10,44 @@
         MyActionBar:
             prev: True
             func: root.funcao
+        BoxLayout:
+            ScrollView:
+                BoxLayout:
+                    id: box
+                    orientation: 'vertical'
+                    size_hint_y:None
+                    height:self.minimum_height
+
+<Devolucoes>
+    BoxLayout:
+        orientation: 'vertical'
+        canvas.before:
+            Color:
+                rgba:1,1,1,1
+            Rectangle:
+                size:self.size
+                pos:self.pos
+        MyActionBar:
+            prev: True
+            func: root.funcao
+        BoxLayout:
+            ScrollView:
+                BoxLayout:
+                    id: box
+                    orientation: 'vertical'
+                    size_hint_y:None
+                    height:self.minimum_height
+
+<Emprestar>
+    BoxLayout:
+        orientation: 'vertical'
+        canvas.before:
+            Color:
+                rgba:1,1,1,1
+            Rectangle:
+                size:self.size
+                pos:self.pos
+        MyActionBar:
+            prev: True
+            func: root.funcao
         Button:
-            text: 'emprestimos'

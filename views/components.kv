@@ -55,8 +55,48 @@
             id: emprestimos
             important: True
             text: 'Emprestimos'
-            values: ['Ver Todos']
+            values: ['Ver Todos', "Devoluções", "Emprestar Livro"]
             on_text:
                 if args[1] != 'Emprestimos':\
                 app.root.current=args[1].replace(' ', '')+"emprestimos"
                 emprestimos.text='Emprestimos'
+
+<Exibir>
+    size_hint_y:None
+    height:'40sp'
+    Label:
+        color: 0, 0, 0, 1
+        text: root.texto
+        font_size:'15sp'
+    Button:
+        text:'Atualizar'
+        size_hint_x:None
+        width:'70sp'
+        on_release: root.att
+    Button:
+        text:'Excluir'
+        size_hint_x:None
+        width:'70sp'
+        on_release: root.deletar
+
+<ExibirExemplar>
+    size_hint_y:None
+    height:'40sp'
+    Label:
+        color: 0, 0, 0, 1
+        text: root.livro
+        font_size:'15sp'
+    Label:
+        color: 0, 0, 0, 1
+        text: root.ex
+        font_size:'15sp'
+    Button:
+        text:'Atualizar'
+        size_hint_x:None
+        width:'70sp'
+        on_release: root.att
+    Button:
+        text:'Excluir'
+        size_hint_x:None
+        width:'70sp'
+        on_release: root.deletar

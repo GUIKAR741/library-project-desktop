@@ -10,8 +10,13 @@
         MyActionBar:
             prev: True
             func: root.funcao
-        Button:
-            text: 'livros'
+        BoxLayout:
+            ScrollView:
+                BoxLayout:
+                    id: box
+                    orientation: 'vertical'
+                    size_hint_y:None
+                    height:self.minimum_height
         
 <LivrosCadastrar>
     BoxLayout:
@@ -40,8 +45,13 @@
         MyActionBar:
             prev: True
             func: root.funcao
-        Button:
-            text: 'exemplares'
+        BoxLayout:
+            ScrollView:
+                BoxLayout:
+                    id: box
+                    orientation: 'vertical'
+                    size_hint_y:None
+                    height:self.minimum_height
 
 <ExemplaresCadastrar>
     BoxLayout:

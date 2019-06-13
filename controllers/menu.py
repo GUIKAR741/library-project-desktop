@@ -23,8 +23,11 @@ class Menu(Screen):
         """."""
         super().__init__(*args, **kwargs)
         total = Emprestimo().select("SELECT count(id) as emp FROM emprestimo")
+        totaldev = Emprestimo().select("SELECT count(id) as dev FROM devolucao")
         self.emprestimos = "Emprestimos\n" + \
-            str(total.emp) + " Emprestimos Realizados"
+            str(total.emp) + " Emprestimos Realizados\n"
+        self.emprestimos += "\nDevoluções\n" + \
+            str(totaldev.dev) + " Devoluções Realizados"
         total = Emprestimo().select("SELECT count(id) as res FROM reserva")
         self.reservas = "Reservas\n" + \
             str(total.res) + " Reservas Realizadas"
