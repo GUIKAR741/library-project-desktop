@@ -22,24 +22,30 @@ class Menu(Screen):
     def __init__(self, *args, **kwargs):
         """."""
         super().__init__(*args, **kwargs)
-        total = Emprestimo().select("SELECT count(id) as emp FROM emprestimo")
-        totaldev = Emprestimo().select("SELECT count(id) as dev FROM devolucao")
-        self.emprestimos = "Emprestimos\n" + \
-            str(total.emp) + " Emprestimos Realizados\n"
-        self.emprestimos += "\nDevoluções\n" + \
-            str(totaldev.dev) + " Devoluções Realizados"
-        total = Emprestimo().select("SELECT count(id) as res FROM reserva")
-        self.reservas = "Reservas\n" + \
-            str(total.res) + " Reservas Realizadas"
-        total = Emprestimo().select("SELECT count(id) as liv FROM livro")
-        totalex = Emprestimo().select("SELECT count(id) as ex FROM exemplar")
-        self.livros = "Livros\n" + \
-            str(total.liv) + " Livros Cadastrados\n\n" + \
-            "Exemplares\n" + \
-            str(totalex.ex) + " Exemplares Cadastrados"
+
         total = Emprestimo().select("SELECT count(id) as usr FROM usuario")
-        self.usuarios = "Usuarios\n" + \
+        self.usuarios = "[size=20]Usuarios\n[/size]" + \
             str(total.usr) + " Usuarios Cadastrados"
+
+        total = Emprestimo().select("SELECT count(id) as liv FROM livro")
+        self.livros = "[size=20]Livros\n[/size]" + \
+            str(total.liv) + " Livros Cadastrados"
+
+        total = Emprestimo().select("SELECT count(id) as ex FROM exemplar")
+        self.exemplares = "[size=20]Exemplares\n[/size]" + \
+            str(total.ex) + " Exemplares Cadastrados"
+
+        total = Emprestimo().select("SELECT count(id) as emp FROM emprestimo")
+        self.emprestimos = "[size=20]Empréstimos\n[/size]" + \
+            str(total.emp) + " Empréstimos Realizados"
+
+        total = Emprestimo().select("SELECT count(id) as dev FROM devolucao")
+        self.devolucoes = "[size=20]Devoluções\n[/size]" + \
+            str(total.dev) + " Devoluções Realizadas"
+
+        total = Emprestimo().select("SELECT count(id) as res FROM reserva")
+        self.reservas = "[size=20]Reservas\n[/size]" + \
+            str(total.res) + " Reservas Realizadas"
 
     def on_pre_enter(self):
         """."""

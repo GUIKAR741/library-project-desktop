@@ -1,3 +1,5 @@
+#:import utils kivy.utils
+
 <Usuarios>
     BoxLayout:
         orientation: 'vertical'
@@ -30,5 +32,117 @@
         MyActionBar:
             prev: True
             func: root.funcao
-        Button:
-            text: 'usuarios cadastrar'
+        BoxLayout:
+            orientation: 'vertical'
+            padding: 10
+            BoxLayout:
+                Label:
+                    text: "Nome: "
+                    color: 0, 0, 0, 1
+                    height: '32dp'
+                    size_hint_y: None
+                    size_hint_x: .2
+                TextInput:
+                    id: nome
+                    text: root.nome
+                    size_hint_y: None
+                    size_hint_x: .7
+                    height: '32dp'
+                    multiline: False
+                    focus: True
+            BoxLayout:
+                Label:
+                    text: "Email: "
+                    color: 0, 0, 0, 1
+                    height: '32dp'
+                    size_hint_y: None
+                    size_hint_x: .2
+                TextInput:
+                    id: email
+                    text: root.email
+                    size_hint_y: None
+                    size_hint_x: .7
+                    multiline: False
+                    height: '32dp'
+            BoxLayout:
+                Label:
+                    text: "Telefone: "
+                    color: 0, 0, 0, 1
+                    height: '32dp'
+                    size_hint_y: None
+                    size_hint_x: .2
+                TextInput:
+                    id: telefone
+                    text: root.telefone
+                    size_hint_y: None
+                    size_hint_x: .7
+                    height: '32dp'
+                    multiline: False
+            BoxLayout:
+                Label:
+                    text: "CPF: "
+                    color: 0, 0, 0, 1
+                    height: '32dp'
+                    size_hint_y: None
+                    size_hint_x: .2
+                TextInput:
+                    id: cpf
+                    text: root.cpf
+                    size_hint_y: None
+                    size_hint_x: .7
+                    multiline: False
+                    height: '32dp'
+            BoxLayout:
+                Label:
+                    text: "Senha: "
+                    color: 0, 0, 0, 1
+                    height: '32dp'
+                    size_hint_y: None
+                    size_hint_x: .2
+                TextInput:
+                    id: senha
+                    text: root.senha
+                    size_hint_y: None
+                    size_hint_x: .7
+                    password: True
+                    multiline: False
+                    height: '32dp'
+            BoxLayout:
+                Label:
+                    size_hint_y: .5
+                    height: '32dp'
+                    color: 0, 0, 0, 1
+                    text: "Tipo Usuario:"
+                CheckBox:
+                    id: bib
+                    size_hint_y: .5
+                    height: '32dp'
+                    color: 0, 0, 0, 1
+                    group: "tipo"
+                    active: root.bib
+                    allow_no_selection: False
+                Label:
+                    size_hint_y: .5
+                    height: '32dp'
+                    color: 0, 0, 0, 1
+                    text: "Bibliotecário"
+                CheckBox:
+                    id: user
+                    size_hint_y: .5
+                    height: '32dp'
+                    color: 0, 0, 0, 1
+                    group: "tipo"
+                    active: root.user
+                    allow_no_selection: False
+                Label:
+                    size_hint_y: .5
+                    height: '32dp'
+                    color: 0, 0, 0, 1
+                    text: "Usuario"
+            BoxLayout:
+                Button:
+                    size_hint_y: .5
+                    height: '32dp'
+                    text: root.nomeBotao
+                    background_color: 0.1607843137254902, 0.7137254901960784, 0.9647058823529412, 1
+                    on_release: root.val_form()

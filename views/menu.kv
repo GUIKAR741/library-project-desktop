@@ -12,26 +12,93 @@
             orientation: 'horizontal'
             BoxLayout:
                 orientation: 'vertical'
-                Label:
-                    color: 0, 0, 0, 1
-                    text: root.emprestimos
-                    halign: 'center'
+                BoxLayout:
+                    orientation: 'vertical'
+                    Label:
+                        Image:
+                            center: self.parent.center
+                            source: 'res/icon.png' 
+                BoxLayout:
+                    orientation: 'vertical'
+                    Label:
+                        color: 0, 0, 0, 1
+                        text: root.usuarios
+                        markup: True 
+                        halign: 'center'
             BoxLayout:
                 orientation: 'vertical'
-                Label:
-                    color: 0, 0, 0, 1
-                    text: root.reservas
-                    halign: 'center'
+                BoxLayout:
+                    orientation: 'vertical'
+                    Label:
+                        Image:
+                            center: self.parent.center
+                            source: 'res/icon.png' 
+                BoxLayout:
+                    orientation: 'vertical'
+                    Label:
+                        color: 0, 0, 0, 1
+                        text: root.livros
+                        markup: True 
+                        halign: 'center'
             BoxLayout:
                 orientation: 'vertical'
-                Label:
-                    color: 0, 0, 0, 1
-                    text: root.livros
-                    halign: 'center'
+                BoxLayout:
+                    orientation: 'vertical'
+                    Label:
+                        Image:
+                            center: self.parent.center
+                            source: 'res/icon.png' 
+                BoxLayout:
+                    orientation: 'vertical'
+                    Label:
+                        color: 0, 0, 0, 1
+                        text: root.exemplares
+                        markup: True 
+                        halign: 'center'
+        BoxLayout:
+            orientation: 'horizontal'
             BoxLayout:
                 orientation: 'vertical'
-                Label:
-                    color: 0, 0, 0, 1
-                    text: root.usuarios
-                    halign: 'center'
-
+                BoxLayout:
+                    orientation: 'vertical'
+                    Label:
+                        Image:
+                            center: self.parent.center
+                            source: 'res/icon.png' 
+                BoxLayout:
+                    orientation: 'vertical'
+                    Label:
+                        color: 0, 0, 0, 1
+                        text: root.emprestimos
+                        markup: True 
+                        halign: 'center'
+            BoxLayout:
+                orientation: 'vertical'
+                BoxLayout:
+                    orientation: 'vertical'
+                    Label:
+                        Image:
+                            center: self.parent.center
+                            source: 'res/icon.png' 
+                BoxLayout:
+                    orientation: 'vertical'
+                    Label:
+                        color: 0, 0, 0, 1
+                        text: root.devolucoes
+                        markup: True 
+                        halign: 'center'
+            BoxLayout:
+                orientation: 'vertical'
+                BoxLayout:
+                    orientation: 'vertical'
+                    Label:
+                        Image:
+                            center: self.parent.center
+                            source: 'res/icon.png' 
+                BoxLayout:
+                    orientation: 'vertical'
+                    Label:
+                        color: 0, 0, 0, 1
+                        text: root.reservas
+                        markup: True 
+                        halign: 'center'

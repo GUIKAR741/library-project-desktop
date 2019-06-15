@@ -1,6 +1,7 @@
 #:import Factory kivy.factory.Factory
 <ActionSpinnerOptions@SpinnerOption>
     background_color: .4, .4, .4, 1
+    text_language: "pt-BR"
 
 <ActionSpinner@Spinner+ActionItem>
     canvas.before:
@@ -79,24 +80,16 @@
         width:'70sp'
         on_release: root.deletar
 
-<ExibirExemplar>
-    size_hint_y:None
-    height:'40sp'
-    Label:
-        color: 0, 0, 0, 1
-        text: root.livro
-        font_size:'15sp'
-    Label:
-        color: 0, 0, 0, 1
-        text: root.ex
-        font_size:'15sp'
-    Button:
-        text:'Atualizar'
-        size_hint_x:None
-        width:'70sp'
-        on_release: root.att
-    Button:
-        text:'Excluir'
-        size_hint_x:None
-        width:'70sp'
-        on_release: root.deletar
+<PopupError>:
+    size_hint: .5, .5
+    auto_dismiss: False
+    title: root.titulo
+    BoxLayout:
+        orientation: 'vertical'
+        Label:
+            text: root.texto
+        Button:
+            size_hint_y: None
+            height: '30sp'
+            text: "Fechar"
+            on_press: root.funcao(root)

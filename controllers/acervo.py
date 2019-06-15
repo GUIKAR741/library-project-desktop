@@ -1,19 +1,10 @@
 """."""
-from kivy.properties import Property, StringProperty  # pylint: disable=no-name-in-module
-from kivy.uix.boxlayout import BoxLayout
+from kivy.metrics import sp
 from .telaBase import Tela  # pylint: disable=relative-beyond-top-level
 from .exibir import Exibir  # pylint: disable=relative-beyond-top-level
 from models.livro import Livro  # pylint: disable=import-error
 from models.exemplar import Exemplar  # pylint: disable=import-error
-
-
-class ExibirExemplar(BoxLayout):
-    """."""
-
-    livro = StringProperty()
-    ex = StringProperty()
-    att = Property(lambda: ...)
-    deletar = Property(lambda: ...)
+from kivy.clock import Clock
 
 
 class Livros(Tela):
@@ -23,6 +14,10 @@ class Livros(Tela):
         """."""
         super().on_pre_enter()
         self.ids.box.clear_widgets()
+        Clock.schedule_once(self.addLivro, .5)
+
+    def addLivro(self, dt):
+        """."""
         livros = Livro().select("SELECT titulo FROM livro", sel='fetchall')
         for i in livros:
             ex = Exibir()
@@ -43,14 +38,19 @@ class Exemplares(Tela):
         """."""
         super().on_pre_enter()
         self.ids.box.clear_widgets()
+        Clock.schedule_once(self.addEx, .5)
+
+    def addEx(self, dt):
+        """."""
         livros = Exemplar().select(
             "SELECT l.titulo, e.codigo FROM livro l JOIN exemplar e ON l.id=e.livro_id",
             sel='fetchall'
-            )
+        )
         for i in livros:
-            ex = ExibirExemplar()
-            ex.livro = i.titulo[:30]+'...'
-            ex.ex = i.codigo
+            ex = Exibir()
+            ex.texto = "Titulo: " + i.titulo + '\n' + \
+                       "Codigo: " + i.codigo
+            ex.height = sp(130)
             self.ids.box.add_widget(ex)
 
 
