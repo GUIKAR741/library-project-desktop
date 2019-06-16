@@ -12,25 +12,6 @@ class Usuario(Model):
         self.__table__ = 'usuario'
         self.__pk__ = 'id'
 
-    @property
-    def is_authenticated(self):
-        """."""
-        return True
-
-    @property
-    def is_active(self):
-        """."""
-        return True
-
-    @property
-    def is_anonymous(self):
-        """."""
-        return False
-
-    def get_id(self):
-        """."""
-        return str(self.getDict()[self.__pk__])
-
     def procurarUsuarioPeloEmail(self, email: str):
         """."""
         usuario = self.select(
@@ -40,9 +21,9 @@ class Usuario(Model):
         return usuario if usuario else None
 
     def criptografar_senha(self, password):
-        """."""
+        """Criptografa a Senha."""
         self.__dict__[password] = pbkdf2_sha256.hash(self.__dict__[password])
 
     def verify_password(self, campoPassword, password):
-        """."""
+        """Verifica se a Senha está Correta."""
         return pbkdf2_sha256.verify(password, self.__dict__[campoPassword])

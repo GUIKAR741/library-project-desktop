@@ -1,13 +1,9 @@
 """Model Base do Banco."""
 import pymysql
-from .config import (
-    MYSQL_DATABASE_DB,
-    MYSQL_DATABASE_HOST,
-    MYSQL_DATABASE_PASSWORD,
-    MYSQL_DATABASE_PORT,
-    MYSQL_DATABASE_USER,
-    MYSQL_DATABASE_CHARSET
-)
+
+from .config import (MYSQL_DATABASE_CHARSET, MYSQL_DATABASE_DB,
+                     MYSQL_DATABASE_HOST, MYSQL_DATABASE_PASSWORD,
+                     MYSQL_DATABASE_PORT, MYSQL_DATABASE_USER)
 
 
 class sql:
@@ -106,7 +102,7 @@ class Model(object):
                         filter(
                             lambda x: not (self.__pk__ == x),
                             dic.keys()
-                            )
+                        )
                         )
                     )
                 )

@@ -1,6 +1,7 @@
 """."""
+from kivy.properties import (Property,  # pylint: disable=no-name-in-module
+                             StringProperty)
 from kivy.uix.popup import Popup
-from kivy.properties import StringProperty, Property  # pylint: disable=no-name-in-module
 
 
 class PopupError(Popup):

@@ -27,52 +27,58 @@
             on_release: root.func()
         ActionSpinner:
             id: usuarios
-            important: True
             text: 'Usuarios'
             values: ['Ver Todos', 'Cadastrar']
             on_text:
                 root.usuario(args)
         ActionSpinner:
             id: acervo
-            important: True
             text: 'Acervo'
             values: ['Livros', 'Exemplares', 'Cadastrar Livro', 'Cadastrar Exemplar']
             on_text:
                 if args[1] != 'Acervo':\
                 app.root.current=args[1].replace(' ', '')+"acervo"
                 acervo.text='Acervo'
+                app.root.current_screen.on_pre_enter()
         ActionSpinner:
             id: reservas
-            important: True
             text: 'Reservas'
             values: ['Ver Todas']
             on_text:
                 if args[1] != 'Reservas':\
                 app.root.current=args[1].replace(' ', '')+"reservas"
                 reservas.text='Reservas'
+                app.root.current_screen.on_pre_enter()
         ActionSpinner:
             id: emprestimos
-            important: True
             text: 'Emprestimos'
             values: ['Ver Todos', "Devoluções", "Emprestar Livro"]
             on_text:
                 if args[1] != 'Emprestimos':\
                 app.root.current=args[1].replace(' ', '')+"emprestimos"
                 emprestimos.text='Emprestimos'
+                app.root.current_screen.on_pre_enter()
+        ActionButton:
+            text: 'Sair'
+            on_release: 
+                root.sair()
 
 <Exibir>
     size_hint_y:None
     height:'40sp'
     Label:
+        id: texto
         color: 0, 0, 0, 1
         text: root.texto
         font_size:'15sp'
     Button:
+        id: att
         text:'Atualizar'
         size_hint_x:None
         width:'70sp'
         on_release: root.att(root)
     Button:
+        id: deletar
         text:'Excluir'
         size_hint_x:None
         width:'70sp'
@@ -89,6 +95,6 @@
             text: root.texto
         Button:
             size_hint_y: None
-            height: '30sp'
+            height: '50sp'
             text: "Fechar"
             on_press: root.funcao(root)

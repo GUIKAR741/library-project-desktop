@@ -1,0 +1,49 @@
+<Login>
+    BoxLayout:
+        orientation: 'vertical'
+        padding: "50dp"
+        Image:
+            center: self.parent.center
+            source: 'res/icon.png'
+        BoxLayout:
+            orientation: 'horizontal'
+            Label:
+                size_hint_x: .2
+                text: 'Email'
+                size_hint_y: None
+                font_size: '20sp'
+                height: '40dp'
+            TextInput:
+                id: email
+                text: root.email
+                font_size: '20sp'
+                size_hint_x: .7
+                size_hint_y: None
+                multiline: False
+                height: '40dp'
+                center: 
+        BoxLayout:
+            orientation: 'horizontal'
+            Label:
+                size_hint_y: None
+                size_hint_x: .2
+                text: 'Senha'
+                font_size: '20sp'
+                height: '40dp'
+            TextInput:
+                id: senha
+                text: root.senha
+                size_hint_y: None
+                size_hint_x: .7
+                password: True
+                multiline: False
+                font_size: '20sp'
+                height: '40dp'
+        BoxLayout:
+            Button:
+                text: 'Logar'
+                size_hint_y: None
+                font_size: '20sp'
+                height: '60dp'
+                on_release:
+                    root.fazerLogin()

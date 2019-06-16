@@ -1,7 +1,12 @@
 """."""
-from kivy.uix.actionbar import ActionBar
-from kivy.properties import BooleanProperty, Property  # pylint: disable=no-name-in-module
 from kivy.app import App
+from kivy.metrics import sp
+from kivy.properties import (  # pylint: disable=no-name-in-module
+    BooleanProperty, Property)
+from kivy.uix.actionbar import ActionBar
+from kivy.uix.button import Button
+
+from .popuperror import PopupError  # pylint: disable=relative-beyond-top-level
 
 
 class MyActionBar(ActionBar):
@@ -29,3 +34,32 @@ class MyActionBar(ActionBar):
                 root.current_screen.ids.bib.active = False
                 root.current_screen.ids.user.active = True
                 root.current_screen.ids.nomeBotao.text = "Cadastrar"
+            else:
+                root.current_screen.on_pre_enter()
+
+    def sair(self):
+        """."""
+        p = PopupError()
+        p.titulo = "Deseja Realmente Sair?"
+        p.size_hint_y = .2
+        p.ids.box.clear_widgets()
+        sim = Button(text='sim')
+        sim.size_hint_y = None
+        sim.height = sp(40)
+        sim.on_release = (lambda: self._sair_func(p))
+        nao = Button(text='não')
+        nao.size_hint_y = None
+        nao.height = sp(40)
+        nao.on_release = p.dismiss
+        p.ids.box.orientation = 'horizontal'
+        p.ids.box.add_widget(sim)
+        p.ids.box.add_widget(nao)
+        p.open()
+
+    def _sair_func(self, p):
+        """."""
+        p.dismiss()
+        root = App.get_running_app().root
+        root.current = 'login'
+        root.current_screen.ids.email.text = ''
+        root.current_screen.ids.senha.text = ''

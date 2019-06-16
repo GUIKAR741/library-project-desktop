@@ -1,5 +1,5 @@
 """."""
-from kivy.uix.screenmanager import ScreenManager, FadeTransition
+from kivy.uix.screenmanager import FadeTransition, ScreenManager
 
 
 class GerenciadorDeTelas(ScreenManager):

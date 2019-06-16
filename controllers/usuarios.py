@@ -1,13 +1,16 @@
 """."""
-from kivy.properties import StringProperty, BooleanProperty  # pylint: disable=no-name-in-module
 from kivy.app import App
 from kivy.clock import Clock
 from kivy.metrics import sp
+from kivy.properties import (  # pylint: disable=no-name-in-module
+    BooleanProperty, StringProperty)
 from kivy.uix.button import Button
-from .telaBase import Tela  # pylint: disable=relative-beyond-top-level
+
+from models.usuario import Usuario  # pylint: disable=import-error
+
 from .exibir import Exibir  # pylint: disable=relative-beyond-top-level
 from .popuperror import PopupError  # pylint: disable=relative-beyond-top-level
-from models.usuario import Usuario  # pylint: disable=import-error
+from .telaBase import Tela  # pylint: disable=relative-beyond-top-level
 
 
 class Usuarios(Tela):
@@ -16,18 +19,36 @@ class Usuarios(Tela):
     def on_pre_enter(self, *args, **kwargs):
         """."""
         super().on_pre_enter()
-        self.ids.box.clear_widgets()
         Clock.schedule_once(self.addUsuarios, .5)
 
     def addUsuarios(self, dt):
         """."""
-        usuarios = Usuario().select("SELECT id, nome FROM usuario", sel='fetchall')
-        for i in usuarios:
+        self.ids.box.clear_widgets()
+        usuarios = Usuario().select(
+            """
+            SELECT id, nome, email, tipo
+            FROM usuario
+            """,
+            sel='fetchall'
+        )
+        if len(usuarios) > 0:
+            for i in usuarios:
+                ex = Exibir()
+                ex.idUser = i.id
+                ex.att = self.atualizar
+                ex.deletar = self.deletar
+                ex.height = sp(70)
+                ex.texto = (f"Nome: {i.nome}\n"
+                            f"Email: {i.email}\n"
+                            f"Tipo: {'Bibliotecário' if i.tipo==1 else 'Usuario'}")
+                self.ids.box.add_widget(ex)
+        else:
             ex = Exibir()
-            ex.idUser = i.id
-            ex.att = self.atualizar
-            ex.deletar = self.deletar
-            ex.texto = i.nome
+            ex.remove_widget(ex.ids.att)
+            ex.remove_widget(ex.ids.deletar)
+            ex.height = sp(50)
+            ex.ids.texto.font_size = sp(20)
+            ex.texto = "Não há Usuarios!"
             self.ids.box.add_widget(ex)
 
     def atualizar(self, instancia):
@@ -35,7 +56,7 @@ class Usuarios(Tela):
         user = Usuario().select(
             "SELECT * FROM usuario WHERE id = %(id)s",
             {'id': instancia.idUser}
-            )
+        )
         root = App.get_running_app().root
         root.current = 'Cadastrarusuarios'
         root.current_screen.idUser = user.id
@@ -71,8 +92,7 @@ class Usuarios(Tela):
         """."""
         popup.dismiss()
         Usuario().delete('id', ins.idUser)
-        App.get_running_app().root.current = 'menu'
-        App.get_running_app().root.current = 'VerTodosusuarios'
+        App.get_running_app().root.current_screen.on_pre_enter()
 
 
 class UsuariosCadastrar(Tela):
@@ -97,7 +117,8 @@ class UsuariosCadastrar(Tela):
         """."""
         u = Usuario()
         u.nome = self.ids.nome.text
-        filemail = list(filter(lambda x: x == '@' or x == '.', self.ids.email.text))
+        filemail = list(filter(lambda x: x == '@' or x ==
+                               '.', self.ids.email.text))
         u.email = self.ids.email.text
         u.telefone = self.ids.telefone.text
         u.cpf = ''.join(
