@@ -7,5 +7,5 @@ class Exibir(BoxLayout):
     """."""
 
     texto = StringProperty()
-    att = Property(lambda: ...)
-    deletar = Property(lambda: ...)
+    att = Property(lambda x: ...)
+    deletar = Property(lambda x: ...)

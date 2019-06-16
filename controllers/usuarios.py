@@ -2,6 +2,8 @@
 from kivy.properties import StringProperty, BooleanProperty  # pylint: disable=no-name-in-module
 from kivy.app import App
 from kivy.clock import Clock
+from kivy.metrics import sp
+from kivy.uix.button import Button
 from .telaBase import Tela  # pylint: disable=relative-beyond-top-level
 from .exibir import Exibir  # pylint: disable=relative-beyond-top-level
 from .popuperror import PopupError  # pylint: disable=relative-beyond-top-level
@@ -19,11 +21,58 @@ class Usuarios(Tela):
 
     def addUsuarios(self, dt):
         """."""
-        usuarios = Usuario().select("SELECT nome FROM usuario", sel='fetchall')
+        usuarios = Usuario().select("SELECT id, nome FROM usuario", sel='fetchall')
         for i in usuarios:
             ex = Exibir()
+            ex.idUser = i.id
+            ex.att = self.atualizar
+            ex.deletar = self.deletar
             ex.texto = i.nome
             self.ids.box.add_widget(ex)
+
+    def atualizar(self, instancia):
+        """."""
+        user = Usuario().select(
+            "SELECT * FROM usuario WHERE id = %(id)s",
+            {'id': instancia.idUser}
+            )
+        root = App.get_running_app().root
+        root.current = 'Cadastrarusuarios'
+        root.current_screen.idUser = user.id
+        root.current_screen.ids.nome.text = user.nome
+        root.current_screen.ids.email.text = user.email
+        root.current_screen.ids.cpf.text = user.cpf
+        root.current_screen.ids.telefone.text = user.telefone
+        root.current_screen.ids.senha.text = ''
+        root.current_screen.ids.bib.active = True if user.tipo == 1 else False
+        root.current_screen.ids.user.active = True if user.tipo == 0 else False
+        root.current_screen.ids.nomeBotao.text = "Atualizar"
+
+    def deletar(self, instancia):
+        """."""
+        p = PopupError()
+        p.titulo = "Deseja Realmente Excluir?"
+        p.size_hint_y = .2
+        p.ids.box.clear_widgets()
+        sim = Button(text='sim')
+        sim.size_hint_y = None
+        sim.height = sp(40)
+        sim.on_release = (lambda: self.del_troca(instancia, p))
+        nao = Button(text='não')
+        nao.size_hint_y = None
+        nao.height = sp(40)
+        nao.on_release = p.dismiss
+        p.ids.box.orientation = 'horizontal'
+        p.ids.box.add_widget(sim)
+        p.ids.box.add_widget(nao)
+        p.open()
+
+    def del_troca(self, ins, popup):
+        """."""
+        popup.dismiss()
+        Usuario().delete('id', ins.idUser)
+        App.get_running_app().root.current = 'menu'
+        App.get_running_app().root.current = 'VerTodosusuarios'
 
 
 class UsuariosCadastrar(Tela):
@@ -59,11 +108,17 @@ class UsuariosCadastrar(Tela):
         p = PopupError()
         err = 0
         p.texto = ''
-        if not ('@' in filemail and '.' in filemail):
+        if len(filemail) < 2:
+            p.texto += "Email Invalido.\n"
+            err += 1
+        if err != 1 and not ('@' in filemail and '.' == filemail[-1]):
             p.texto += "Email Invalido.\n"
             err += 1
         if len(u.telefone) < 14:
             p.texto += "Telefone Invalido.\n"
+            err += 1
+        if len(u.senha) < 1:
+            p.texto += "Senha Invalida.\n"
             err += 1
         if len(u.cpf) < 11:
             p.texto += "CPF Invalido.\n"
@@ -76,7 +131,11 @@ class UsuariosCadastrar(Tela):
             p.texto = 'Cadastrado Com Sucesso!'
             p.funcao = self._mudaAoTerminar
             u.criptografar_senha('senha')
-            u.insert()
+            if self.ids.nomeBotao.text == 'Cadastrar':
+                u.insert()
+            else:
+                p.texto = 'Atualizado Com Sucesso!'
+                u.update('id', self.idUser)
             p.open()
 
     def _mudaAoTerminar(self, instancia):

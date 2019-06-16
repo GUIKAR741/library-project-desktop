@@ -31,9 +31,7 @@
             text: 'Usuarios'
             values: ['Ver Todos', 'Cadastrar']
             on_text:
-                if args[1] != 'Usuarios':\
-                app.root.current=args[1].replace(' ', '')+"usuarios"
-                usuarios.text='Usuarios'
+                root.usuario(args)
         ActionSpinner:
             id: acervo
             important: True
@@ -73,18 +71,19 @@
         text:'Atualizar'
         size_hint_x:None
         width:'70sp'
-        on_release: root.att
+        on_release: root.att(root)
     Button:
         text:'Excluir'
         size_hint_x:None
         width:'70sp'
-        on_release: root.deletar
+        on_release: root.deletar(root)
 
 <PopupError>:
     size_hint: .5, .5
     auto_dismiss: False
     title: root.titulo
     BoxLayout:
+        id: box
         orientation: 'vertical'
         Label:
             text: root.texto
