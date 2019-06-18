@@ -19,7 +19,7 @@
     ActionView:
         use_separator: True
         ActionPrevious:
-            title: 'SYML'
+            title: root.textoLogo
             app_icon: 'res/icon.png'
             with_previous: root.prev
             app_icon_height: 5
@@ -27,39 +27,30 @@
             on_release: root.func()
         ActionSpinner:
             id: usuarios
-            text: 'Usuarios'
-            values: ['Ver Todos', 'Cadastrar']
+            text: root.textoUsuarios
+            values: root.listaOpcoesUsuarios
             on_text:
                 root.usuario(args)
         ActionSpinner:
             id: acervo
-            text: 'Acervo'
-            values: ['Livros', 'Exemplares', 'Cadastrar Livro', 'Cadastrar Exemplar']
+            text: root.textoAcervo
+            values: root.listaOpcoesAcervo
             on_text:
-                if args[1] != 'Acervo':\
-                app.root.current=args[1].replace(' ', '')+"acervo"
-                acervo.text='Acervo'
-                app.root.current_screen.on_pre_enter()
+                root.acervo(args)
         ActionSpinner:
             id: reservas
-            text: 'Reservas'
-            values: ['Ver Todas']
+            text: root.textoReservas
+            values: root.listaOpcoesReservas
             on_text:
-                if args[1] != 'Reservas':\
-                app.root.current=args[1].replace(' ', '')+"reservas"
-                reservas.text='Reservas'
-                app.root.current_screen.on_pre_enter()
+                root.reserva(args)
         ActionSpinner:
             id: emprestimos
-            text: 'Emprestimos'
-            values: ['Ver Todos', "Devoluções", "Emprestar Livro"]
+            text: root.textoEmprestimos
+            values: root.listaOpcoesEmprestimos
             on_text:
-                if args[1] != 'Emprestimos':\
-                app.root.current=args[1].replace(' ', '')+"emprestimos"
-                emprestimos.text='Emprestimos'
-                app.root.current_screen.on_pre_enter()
+                root.emprestimo(args)
         ActionButton:
-            text: 'Sair'
+            text: root.textoSair
             on_release: 
                 root.sair()
 
@@ -73,13 +64,13 @@
         font_size:'15sp'
     Button:
         id: att
-        text:'Atualizar'
+        text: root.textoBotaoAtualizar
         size_hint_x:None
         width:'70sp'
         on_release: root.att(root)
     Button:
         id: deletar
-        text:'Excluir'
+        text: root.textoBotaoExcluir
         size_hint_x:None
         width:'70sp'
         on_release: root.deletar(root)
@@ -96,5 +87,5 @@
         Button:
             size_hint_y: None
             height: '50sp'
-            text: "Fechar"
+            text: root.textoBotao
             on_press: root.funcao(root)

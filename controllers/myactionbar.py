@@ -2,7 +2,11 @@
 from kivy.app import App
 from kivy.metrics import sp
 from kivy.properties import (  # pylint: disable=no-name-in-module
-    BooleanProperty, Property)
+    BooleanProperty,
+    Property,
+    StringProperty,
+    ListProperty
+)
 from kivy.uix.actionbar import ActionBar
 from kivy.uix.button import Button
 
@@ -11,6 +15,20 @@ from .popuperror import PopupError  # pylint: disable=relative-beyond-top-level
 
 class MyActionBar(ActionBar):
     """."""
+
+    textoLogo = StringProperty("SYML")
+    textoUsuarios = StringProperty("Usuarios")
+    textoAcervo = StringProperty("Acervo")
+    textoReservas = StringProperty("Reservas")
+    textoEmprestimos = StringProperty("Emprestimos")
+    textoSair = StringProperty("Sair")
+
+    listaOpcoesUsuarios = ListProperty(['Ver Todos', 'Cadastrar'])
+    listaOpcoesAcervo = ListProperty(
+        ['Livros', 'Exemplares', 'Cadastrar Livro', 'Cadastrar Exemplar'])
+    listaOpcoesReservas = ListProperty(['Ver Todas'])
+    listaOpcoesEmprestimos = ListProperty(
+        ['Ver Todos', "Devoluções", "Emprestar Livro"])
 
     prev = BooleanProperty(False)
     func = Property(lambda: ...)
@@ -36,6 +54,30 @@ class MyActionBar(ActionBar):
                 root.current_screen.ids.nomeBotao.text = "Cadastrar"
             else:
                 root.current_screen.on_pre_enter()
+
+    def acervo(self, args):
+        """."""
+        if args[1] != 'Acervo':
+            root = App.get_running_app().root
+            root.current = args[1].replace(' ', '')+"acervo"
+            self.ids.acervo.text = 'Acervo'
+            root.current_screen.on_pre_enter()
+
+    def reserva(self, args):
+        """."""
+        if args[1] != 'Reservas':
+            root = App.get_running_app().root
+            root.current = args[1].replace(' ', '')+"reservas"
+            self.ids.reservas.text = 'Reservas'
+            root.current_screen.on_pre_enter()
+
+    def emprestimo(self, args):
+        """."""
+        if args[1] != 'Emprestimos':
+            root = App.get_running_app().root
+            root.current = args[1].replace(' ', '')+"emprestimos"
+            self.ids.emprestimos.text = 'Emprestimos'
+            root.current_screen.on_pre_enter()
 
     def sair(self):
         """."""

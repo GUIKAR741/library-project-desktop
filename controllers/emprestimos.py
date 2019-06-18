@@ -3,6 +3,7 @@ from kivy.app import App
 from kivy.clock import Clock
 from kivy.metrics import sp
 from kivy.uix.button import Button
+from kivy.properties import StringProperty, ListProperty  # pylint: disable=no-name-in-module
 
 from models.devolucao import Devolucao  # pylint: disable=import-error
 from models.emprestimo import Emprestimo  # pylint: disable=import-error
@@ -160,4 +161,16 @@ class Devolucoes(Tela):
 class Emprestar(Tela):
     """."""
 
-    ...
+    textoBotaoEmprestar = StringProperty("Emprestar")
+
+    textoLabelLivro = StringProperty("Livro:")
+    textoLabelExemplar = StringProperty("Exemplar:")
+    textoLabelUsuario = StringProperty("Usuario:")
+
+    textoSpnLivro = StringProperty("Livro")
+    textoSpnExemplar = StringProperty("Exemplar")
+    textoSpnUsuario = StringProperty("Usuario")
+
+    listaSpnLivro = ListProperty()
+    listaSpnExemplar = ListProperty()
+    listaSpnUsuario = ListProperty()

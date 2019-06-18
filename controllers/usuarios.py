@@ -91,14 +91,31 @@ class Usuarios(Tela):
     def del_troca(self, ins, popup):
         """."""
         popup.dismiss()
-        Usuario().delete('id', ins.idUser)
-        App.get_running_app().root.current_screen.on_pre_enter()
+        runApp = App.get_running_app()
+        if ins.idUser != runApp.root.idUsuario:
+            Usuario().delete('id', ins.idUser)
+            App.get_running_app().root.current_screen.on_pre_enter()
+        else:
+            p = PopupError()
+            p.titulo = "Erro!"
+            p.texto = "Impossivel excluir Usuario Logado!"
+            p.open()
 
 
 class UsuariosCadastrar(Tela):
     """."""
 
     nomeBotao = StringProperty('Cadastrar')
+
+    textoLabelNome = StringProperty('Nome:')
+    textoLabelEmail = StringProperty('Email:')
+    textoLabelCPF = StringProperty('CPF:')
+    textoLabelTelefone = StringProperty('Telefone:')
+    textoLabelSenha = StringProperty('Senha:')
+    textoLabelTipoUsuario = StringProperty("Tipo Usuario:")
+    textoLabelBIB = StringProperty("Bibliotecário")
+    textoLabelUser = StringProperty("Usuario")
+
     nome = StringProperty('')
     email = StringProperty('')
     cpf = StringProperty('')

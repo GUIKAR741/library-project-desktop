@@ -50,4 +50,64 @@
         MyActionBar:
             prev: True
             func: root.funcao
-        Button:
+        BoxLayout:
+            orientation: 'vertical'
+            padding: 10 
+            BoxLayout:
+                # padding: 10
+                Label:
+                    text: root.textoLabelLivro
+                    color: 0, 0, 0, 1
+                    height: '32dp'
+                    size_hint_y: None
+                    size_hint_x: .2
+                Spinner:
+                    id: livrosSpn
+                    size_hint_y: None
+                    size_hint_x: .7
+                    height: '32dp' 
+                    text: root.textoSpnLivro
+                    values: root.listaSpnLivro
+                    # on_text:
+                    #     print(args[1].id)
+            BoxLayout:
+                # padding: 10
+                Label:
+                    text: root.textoLabelExemplar
+                    color: 0, 0, 0, 1
+                    height: '32dp'
+                    size_hint_y: None
+                    size_hint_x: .2
+                Spinner:
+                    id: exemplarSpn
+                    size_hint_y: None
+                    size_hint_x: .7
+                    height: '32dp' 
+                    text: root.textoSpnExemplar
+                    values: root.listaSpnExemplar
+                    # on_text:
+                    #     print(args[1].id)
+            BoxLayout:
+                # padding: 10
+                Label:
+                    text: root.textoLabelUsuario
+                    color: 0, 0, 0, 1
+                    height: '32dp'
+                    size_hint_y: None
+                    size_hint_x: .2
+                Spinner:
+                    id: livrosSpn
+                    size_hint_y: None
+                    size_hint_x: .7
+                    height: '32dp' 
+                    text: root.textoSpnUsuario
+                    values: root.listaSpnUsuario
+                    # on_text:
+                    #     print(args[1].id)
+            BoxLayout:
+                Button:
+                    size_hint_y: .5
+                    height: '32dp'
+                    text: "Emprestar"
+
+

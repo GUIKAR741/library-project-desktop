@@ -30,8 +30,138 @@
         MyActionBar:
             prev: True
             func: root.funcao
-        Button:
-            text: 'livros cadastrar'
+        BoxLayout:
+            orientation: 'vertical'
+            padding: 10
+            BoxLayout:
+                orientation: 'horizontal'
+                BoxLayout:
+                    # padding: 10
+                    Label:
+                        text: root.textoLabelTitulo
+                        color: 0, 0, 0, 1
+                        height: '32dp'
+                        size_hint_y: None
+                        size_hint_x: .2
+                    TextInput:
+                        id: ti_default
+                        size_hint_y: None
+                        size_hint_x: .7
+                        multiline: False
+                        height: '32dp'
+                        focus: True
+                BoxLayout:
+                    # padding: 10
+                    Label:
+                        text: root.textoLabelAutor
+                        color: 0, 0, 0, 1
+                        height: '32dp'
+                        size_hint_y: None
+                        size_hint_x: .2
+                    TextInput:
+                        id: ti_default
+                        size_hint_y: None
+                        size_hint_x: .7
+                        multiline: False
+                        height: '32dp'
+            BoxLayout:
+                orientation: 'horizontal'
+                BoxLayout:
+                    # padding: 10
+                    Label:
+                        text: root.textoLabelUrl
+                        color: 0, 0, 0, 1
+                        height: '32dp'
+                        size_hint_y: None
+                        size_hint_x: .2
+                    TextInput:
+                        id: ti_default
+                        size_hint_y: None
+                        size_hint_x: .7
+                        height: '32dp'
+                        multiline: False
+                        focus: True
+                BoxLayout:
+                    # padding: 10
+                    Label:
+                        text: root.textoLabelEditora
+                        color: 0, 0, 0, 1
+                        height: '32dp'
+                        size_hint_y: None
+                        size_hint_x: .2
+                    TextInput:
+                        id: ti_default
+                        size_hint_y: None
+                        size_hint_x: .7
+                        multiline: False
+                        height: '32dp'
+            BoxLayout:
+                orientation: 'horizontal'
+                BoxLayout:
+                    # padding: 10
+                    Label:
+                        text: root.textoLabelAno
+                        color: 0, 0, 0, 1
+                        height: '32dp'
+                        size_hint_y: None
+                        size_hint_x: .2
+                    TextInput:
+                        id: ti_default
+                        size_hint_y: None
+                        size_hint_x: .7
+                        multiline: False
+                        height: '32dp'
+                BoxLayout:
+                    # padding: 10
+                    Label:
+                        text: root.textoLabelIdioma
+                        color: 0, 0, 0, 1
+                        height: '32dp'
+                        size_hint_y: None
+                        size_hint_x: .2
+                    TextInput:
+                        id: ti_default
+                        size_hint_y: None
+                        size_hint_x: .7
+                        multiline: False
+                        height: '32dp'
+            BoxLayout:
+                orientation: 'horizontal'
+                BoxLayout:
+                    # padding: 10
+                    Label:
+                        text: root.textoLabelISBN
+                        color: 0, 0, 0, 1
+                        height: '32dp'
+                        size_hint_y: None
+                        size_hint_x: .2
+                    TextInput:
+                        id: ti_default
+                        size_hint_y: None
+                        size_hint_x: .7
+                        multiline: False
+                        height: '32dp'
+            BoxLayout:
+                orientation: 'horizontal'
+                BoxLayout:
+                    # padding: 10
+                    Label:
+                        text: root.textoLabelDescricao
+                        color: 0, 0, 0, 1
+                        height: '60dp'
+                        size_hint_y: None
+                        size_hint_x: .2
+                    TextInput:
+                        id: ti_default
+                        size_hint_y: None
+                        size_hint_x: .7
+                        height: '60dp'
+                        multiline: True
+            BoxLayout:
+                Button:
+                    size_hint_y: .5
+                    height: '32dp'
+                    text: root.textoBotaoCadastrar
 
 <Exemplares>
     BoxLayout:
@@ -65,5 +195,41 @@
         MyActionBar:
             prev: True
             func: root.funcao
-        Button:
-            text: 'exemplares cadastrar'
+        BoxLayout:
+            orientation: 'vertical'
+            padding: 10 
+            BoxLayout:
+                # padding: 10
+                Label:
+                    text: root.textoLabelLivro
+                    color: 0, 0, 0, 1
+                    height: '32dp'
+                    size_hint_y: None
+                    size_hint_x: .2
+                Spinner:
+                    id: livrosSpn
+                    size_hint_y: None
+                    size_hint_x: .7
+                    height: '32dp' 
+                    text: root.textoSpnLivro
+                    on_text:
+                        print(args[1].id)
+            BoxLayout:
+                # padding: 10
+                Label:
+                    text: root.textoLabelCodigo
+                    color: 0, 0, 0, 1
+                    height: '32dp'
+                    size_hint_y: None
+                    size_hint_x: .2
+                TextInput:
+                    id: ti_default
+                    size_hint_y: None
+                    size_hint_x: .7
+                    height: '32dp'
+            BoxLayout:
+                Button:
+                    size_hint_y: .5
+                    height: '32dp'
+                    text: root.textoBotaoCadastrar
+

@@ -17,6 +17,10 @@ from .popuperror import PopupError  # pylint: disable=relative-beyond-top-level
 class Login(Screen):
     """."""
 
+    textoEmail = StringProperty('Email:')
+    textoSenha = StringProperty('Senha:')
+    textoBotaoLogin = StringProperty('Logar')
+
     email = StringProperty('')
     senha = StringProperty('')
 
@@ -32,7 +36,9 @@ class Login(Screen):
                     p.titulo = "Logado com Sucesso!"
                     p.texto += 'Bem Vindo ao SYML!'
                     p.open()
-                    App.get_running_app().root.current = 'menu'
+                    runApp = App.get_running_app()
+                    runApp.root.idUsuario = usuario.id
+                    runApp.root.current = 'menu'
                 else:
                     p.texto += 'Usuario Não É Bibliotecário!'
                     p.open()

@@ -7,6 +7,8 @@ from kivy.uix.popup import Popup
 class PopupError(Popup):
     """."""
 
+    textoBotao = StringProperty('Fechar')
+
     titulo = StringProperty('')
     texto = StringProperty('')
     funcao = Property(lambda x: x.dismiss())

@@ -37,7 +37,7 @@
             padding: 10
             BoxLayout:
                 Label:
-                    text: "Nome: "
+                    text: root.textoLabelNome
                     color: 0, 0, 0, 1
                     height: '32dp'
                     size_hint_y: None
@@ -52,7 +52,7 @@
                     focus: True
             BoxLayout:
                 Label:
-                    text: "Email: "
+                    text: root.textoLabelEmail
                     color: 0, 0, 0, 1
                     height: '32dp'
                     size_hint_y: None
@@ -66,7 +66,7 @@
                     height: '32dp'
             BoxLayout:
                 Label:
-                    text: "Telefone: "
+                    text: root.textoLabelTelefone
                     color: 0, 0, 0, 1
                     height: '32dp'
                     size_hint_y: None
@@ -80,7 +80,7 @@
                     multiline: False
             BoxLayout:
                 Label:
-                    text: "CPF: "
+                    text: root.textoLabelCPF
                     color: 0, 0, 0, 1
                     height: '32dp'
                     size_hint_y: None
@@ -94,7 +94,7 @@
                     height: '32dp'
             BoxLayout:
                 Label:
-                    text: "Senha: "
+                    text: root.textoLabelSenha
                     color: 0, 0, 0, 1
                     height: '32dp'
                     size_hint_y: None
@@ -112,7 +112,7 @@
                     size_hint_y: .5
                     height: '32dp'
                     color: 0, 0, 0, 1
-                    text: "Tipo Usuario:"
+                    text: root.textoLabelTipoUsuario
                 CheckBox:
                     id: bib
                     size_hint_y: .5
@@ -125,7 +125,7 @@
                     size_hint_y: .5
                     height: '32dp'
                     color: 0, 0, 0, 1
-                    text: "Bibliotecário"
+                    text: root.textoLabelBIB
                 CheckBox:
                     id: user
                     size_hint_y: .5
@@ -138,7 +138,7 @@
                     size_hint_y: .5
                     height: '32dp'
                     color: 0, 0, 0, 1
-                    text: "Usuario"
+                    text: root.textoLabelUser
             BoxLayout:
                 Button:
                     id: nomeBotao

@@ -9,13 +9,14 @@
             orientation: 'horizontal'
             Label:
                 size_hint_x: .2
-                text: 'Email'
+                text: root.textoEmail
                 size_hint_y: None
                 font_size: '20sp'
                 height: '40dp'
             TextInput:
                 id: email
-                text: root.email
+                text: 'usuario@usuario.com'
+                # text: root.email
                 font_size: '20sp'
                 size_hint_x: .7
                 size_hint_y: None
@@ -27,12 +28,13 @@
             Label:
                 size_hint_y: None
                 size_hint_x: .2
-                text: 'Senha'
+                text: root.textoSenha
                 font_size: '20sp'
                 height: '40dp'
             TextInput:
                 id: senha
-                text: root.senha
+                text: '123456'
+                # text: root.senha
                 size_hint_y: None
                 size_hint_x: .7
                 password: True
@@ -41,7 +43,7 @@
                 height: '40dp'
         BoxLayout:
             Button:
-                text: 'Logar'
+                text: root.textoBotaoLogin
                 size_hint_y: None
                 font_size: '20sp'
                 height: '60dp'
