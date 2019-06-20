@@ -32,7 +32,7 @@ class Livros(Tela):
                 ex.texto = (f"Titulo: {i.titulo}\n"
                             f"Autor: {i.autor}")
                 ex.idL = i.id
-                # ex.att = self.atualizar
+                ex.att = self.atualizar
                 ex.deletar = self.deletar
                 self.ids.box.add_widget(ex)
         else:
@@ -43,6 +43,25 @@ class Livros(Tela):
             ex.ids.texto.font_size = sp(20)
             ex.texto = "Não há Livros!"
             self.ids.box.add_widget(ex)
+
+    def atualizar(self, instancia):
+        """."""
+        livro = Livro().select(
+            "SELECT * FROM livro WHERE id = %(id)s",
+            {'id': instancia.idL}
+        )
+        root = App.get_running_app().root
+        root.current = 'CadastrarLivroacervo'
+        root.current_screen.idLivro = livro.id
+        root.current_screen.ids.titulo.text = livro.titulo
+        root.current_screen.ids.autor.text = livro.autor
+        root.current_screen.ids.url.text = livro.capa
+        root.current_screen.ids.editora.text = livro.editora
+        root.current_screen.ids.ano.text = str(livro.ano)
+        root.current_screen.ids.idioma.text = livro.idioma
+        root.current_screen.ids.isbn.text = livro.isbn
+        root.current_screen.ids.descricao.text = livro.descricao
+        root.current_screen.ids.nomeBotao.text = "Atualizar"
 
     def deletar(self, instancia):
         """."""
@@ -98,11 +117,13 @@ class LivrosCadastrar(Tela):
         super().on_pre_enter()
         self.ids.titulo.text = ''
         self.ids.autor.text = ''
+        self.ids.editora.text = ''
         self.ids.url.text = ''
         self.ids.ano.text = ''
         self.ids.idioma.text = ''
         self.ids.isbn.text = ''
         self.ids.descricao.text = ''
+        self.ids.nomeBotao.text = 'Cadastrar'
 
     def validaAno(self):
         """."""
@@ -161,7 +182,11 @@ class LivrosCadastrar(Tela):
             e.idioma = self.textIdioma
             e.isbn = self.textISBN
             e.descricao = self.textDescricao
-            e.insert()
+            if self.ids.nomeBotao.text == 'Cadastrar':
+                e.insert()
+            else:
+                p.texto = 'Atualizado Com Sucesso!'
+                e.update('id', self.idLivro)
             p.open()
 
     def _mudaAoTerminar(self, instancia):
@@ -185,7 +210,7 @@ class Exemplares(Tela):
             """
             SELECT e.id, l.titulo, e.codigo
             FROM livro l JOIN exemplar e ON l.id=e.livro_id
-            ORDER BY e.livro_id
+            ORDER BY e.livro_id, e.codigo
             """,
             sel='fetchall'
         )
@@ -196,7 +221,7 @@ class Exemplares(Tela):
                            "Codigo: " + i.codigo
                 ex.height = sp(130)
                 ex.idEx = i.id
-                # ex.att = self.atualizar
+                ex.att = self.atualizar
                 ex.deletar = self.deletar
                 self.ids.box.add_widget(ex)
         else:
@@ -207,6 +232,21 @@ class Exemplares(Tela):
             ex.ids.texto.font_size = sp(20)
             ex.texto = "Não há Exemplares!"
             self.ids.box.add_widget(ex)
+
+    def atualizar(self, instancia):
+        """."""
+        exemplar = Exemplar().select(
+            "SELECT l.id as idLivro, l.titulo, e.id, e.codigo FROM exemplar e "
+            "JOIN livro l ON l.id=e.livro_id WHERE e.id = %(id)s",
+            {'id': instancia.idEx}
+        )
+        root = App.get_running_app().root
+        root.current = 'CadastrarExemplaracervo'
+        root.current_screen.idEx = exemplar.id
+        root.current_screen.idLivro = str(exemplar.idLivro)
+        root.current_screen.ids.livrosSpn.text = exemplar.titulo
+        root.current_screen.ids.codigoText.text = exemplar.codigo
+        root.current_screen.ids.nomeBotao.text = "Atualizar"
 
     def deletar(self, instancia):
         """."""
@@ -254,6 +294,7 @@ class ExemplaresCadastrar(Tela):
         self.codigo = ''
         self.ids.livrosSpn.text = 'Livros'
         self.ids.codigoText.text = ''
+        self.ids.nomeBotao.text = 'Cadastrar'
         Clock.schedule_once(self.addLivro, .5)
 
     def addLivro(self, dt):
@@ -297,7 +338,11 @@ class ExemplaresCadastrar(Tela):
             e = Exemplar()
             e.livro_id = self.idLivro
             e.codigo = self.codigo
-            e.insert()
+            if self.ids.nomeBotao.text == 'Cadastrar':
+                e.insert()
+            else:
+                p.texto = 'Atualizado Com Sucesso!'
+                e.update('id', self.idEx)
             p.open()
 
     def _mudaAoTerminar(self, instancia):

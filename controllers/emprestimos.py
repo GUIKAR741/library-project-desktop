@@ -8,6 +8,7 @@ from kivy.properties import StringProperty, ListProperty  # pylint: disable=no-n
 from models.devolucao import Devolucao  # pylint: disable=import-error
 from models.emprestimo import Emprestimo  # pylint: disable=import-error
 from models.exemplar import Exemplar  # pylint: disable=import-error
+from models.reserva import Reserva  # pylint: disable=import-error
 
 from .exibir import Exibir  # pylint: disable=relative-beyond-top-level
 from .popuperror import PopupError  # pylint: disable=relative-beyond-top-level
@@ -191,6 +192,7 @@ class Emprestar(Tela):
     listaSpnUsuario = ListProperty()
 
     idExemplar = StringProperty('')
+    idLivro = StringProperty('')
     idUsuario = StringProperty('')
 
     def on_pre_enter(self):
@@ -198,6 +200,7 @@ class Emprestar(Tela):
         super().on_pre_enter()
         self.listaSpnExemplar = []
         self.idExemplar = ''
+        self.idLivro = ''
         self.idUsuario = ''
         self.ids.livrosSpn.text = "Livro"
         self.ids.exemplarSpn.text = "Selecione Um Livro"
@@ -230,6 +233,7 @@ class Emprestar(Tela):
         """."""
         if len(args) > 1 and 'id' in dir(args[1]):
             lid = args[1].id
+            self.idLivro = str(lid)
             self.listaSpnExemplar = []
             self.ids.exemplarSpn.text = "Exemplares"
             livros = Emprestimo().select(
@@ -291,6 +295,17 @@ class Emprestar(Tela):
                 VALUES (%(idU)s, %(idE)s, DATE_ADD(CURRENT_TIMESTAMP, INTERVAL 1 MONTH))""",
                 {'idU': self.idUsuario, 'idE': self.idExemplar}
                 )
+            reserva = e.select(
+                """
+                SELECT id FROM reserva
+                WHERE livro_id=%(idL)s and usuario_id=%(idU)s
+                """,
+                {'idU': self.idUsuario, 'idL': self.idLivro}
+                )
+            if reserva:
+                r = Reserva()
+                r.status = 0
+                r.update('id', reserva.id)
             p.open()
 
     def _mudaAoTerminar(self, instancia):
