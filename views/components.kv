@@ -67,12 +67,14 @@
         text: root.textoBotaoAtualizar
         size_hint_x:None
         width:'70sp'
+        background_color: 0.1607843137254902, 0.7137254901960784, 0.9647058823529412, 1
         on_release: root.att(root)
     Button:
         id: deletar
         text: root.textoBotaoExcluir
         size_hint_x:None
         width:'70sp'
+        background_color: 0.1607843137254902, 0.7137254901960784, 0.9647058823529412, 1
         on_release: root.deletar(root)
 
 <PopupError>:
@@ -88,4 +90,5 @@
             size_hint_y: None
             height: '50sp'
             text: root.textoBotao
+            background_color: 0.1607843137254902, 0.7137254901960784, 0.9647058823529412, 1
             on_press: root.funcao(root)

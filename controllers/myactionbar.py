@@ -89,10 +89,22 @@ class MyActionBar(ActionBar):
         sim.size_hint_y = None
         sim.height = sp(40)
         sim.on_release = (lambda: self._sair_func(p))
+        sim.background_color = (
+            0.1607843137254902,
+            0.7137254901960784,
+            0.9647058823529412,
+            1
+        )
         nao = Button(text='não')
         nao.size_hint_y = None
         nao.height = sp(40)
         nao.on_release = p.dismiss
+        nao.background_color = (
+            0.1607843137254902,
+            0.7137254901960784,
+            0.9647058823529412,
+            1
+        )
         p.ids.box.orientation = 'horizontal'
         p.ids.box.add_widget(sim)
         p.ids.box.add_widget(nao)

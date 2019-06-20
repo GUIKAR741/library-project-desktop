@@ -54,7 +54,6 @@
             orientation: 'vertical'
             padding: 10 
             BoxLayout:
-                # padding: 10
                 Label:
                     text: root.textoLabelLivro
                     color: 0, 0, 0, 1
@@ -68,11 +67,11 @@
                     height: '32dp' 
                     text: root.textoSpnLivro
                     values: root.listaSpnLivro
+                    background_color: 0.1607843137254902, 0.7137254901960784, 0.9647058823529412, 1
                     on_text:
                         if args[1]!='Livro':\
                         root.addExemplar(args)
             BoxLayout:
-                # padding: 10
                 Label:
                     text: root.textoLabelExemplar
                     color: 0, 0, 0, 1
@@ -86,12 +85,10 @@
                     height: '32dp' 
                     text: root.textoSpnExemplar
                     values: root.listaSpnExemplar
+                    background_color: 0.1607843137254902, 0.7137254901960784, 0.9647058823529412, 1
                     on_text:
-                        # if args[1]!='Exemplares' or args[1]!='Selecione Um Livro':\
-                        # root.idExemplar = args[1].id
                         root.escolheExemplar(args)
             BoxLayout:
-                # padding: 10
                 Label:
                     text: root.textoLabelUsuario
                     color: 0, 0, 0, 1
@@ -105,6 +102,7 @@
                     height: '32dp' 
                     text: root.textoSpnUsuario
                     values: root.listaSpnUsuario
+                    background_color: 0.1607843137254902, 0.7137254901960784, 0.9647058823529412, 1
                     on_text:
                         if args[1]!='Usuario':\
                         root.idUsuario = args[1].id
@@ -113,5 +111,6 @@
                     size_hint_y: .5
                     height: '32dp'
                     text: "Emprestar"
+                    background_color: 0.1607843137254902, 0.7137254901960784, 0.9647058823529412, 1
                     on_release:
                         root.emprestar()

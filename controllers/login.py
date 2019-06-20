@@ -64,6 +64,19 @@ class Login(Screen):
         sim = Button(text='Sim', on_release=App.get_running_app().stop)
         nao = Button(text='Não', on_release=pop.dismiss)
 
+        sim.background_color = (
+            0.1607843137254902,
+            0.7137254901960784,
+            0.9647058823529412,
+            1
+        )
+        nao.background_color = (
+            0.1607843137254902,
+            0.7137254901960784,
+            0.9647058823529412,
+            1
+        )
+
         botoes.add_widget(sim)
         botoes.add_widget(nao)
 
