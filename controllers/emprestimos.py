@@ -7,6 +7,7 @@ from kivy.properties import StringProperty, ListProperty  # pylint: disable=no-n
 
 from models.devolucao import Devolucao  # pylint: disable=import-error
 from models.emprestimo import Emprestimo  # pylint: disable=import-error
+from models.exemplar import Exemplar  # pylint: disable=import-error
 
 from .exibir import Exibir  # pylint: disable=relative-beyond-top-level
 from .popuperror import PopupError  # pylint: disable=relative-beyond-top-level
@@ -31,6 +32,7 @@ class Emprestimos(Tela):
             join exemplar ee on e.exemplar_id = ee.id
             join livro l on ee.livro_id=l.id join usuario u on e.usuario_id=u.id
             where status=0
+            order by id desc
             """, sel='fetchall')
         if len(livros) > 0:
             for i in livros:
@@ -81,8 +83,14 @@ class Emprestimos(Tela):
         """."""
         p.dismiss()
         e = Emprestimo()
-        e.renovacao = ins.qtdRen + 1
-        e.update('id', ins.idEmp)
+        e._op(
+            '''
+            UPDATE emprestimo SET renovacao = renovacao+1,
+            data_devolucao_estimada = DATE_ADD(data_devolucao_estimada, INTERVAL 1 MONTH)
+            WHERE id = %(idE)s
+            ''',
+            {'idE': ins.idEmp}
+        )
         App.get_running_app().root.current_screen.on_pre_enter()
 
     def devolver(self, ins):
@@ -110,6 +118,13 @@ class Emprestimos(Tela):
         e = Emprestimo()
         e.status = 1
         e.update('id', ins.idEmp)
+        ee = Exemplar()
+        ee.disponivel = 1
+        cod = e.select(
+            "SELECT exemplar_id FROM emprestimo WHERE id=%(idE)s",
+            {'idE': ins.idEmp}
+        ).exemplar_id
+        ee.update("id", cod)
         App.get_running_app().root.current_screen.on_pre_enter()
 
 
@@ -168,9 +183,134 @@ class Emprestar(Tela):
     textoLabelUsuario = StringProperty("Usuario:")
 
     textoSpnLivro = StringProperty("Livro")
-    textoSpnExemplar = StringProperty("Exemplar")
+    textoSpnExemplar = StringProperty("Selecione Um Livro")
     textoSpnUsuario = StringProperty("Usuario")
 
     listaSpnLivro = ListProperty()
     listaSpnExemplar = ListProperty()
     listaSpnUsuario = ListProperty()
+
+    idExemplar = StringProperty('')
+    idUsuario = StringProperty('')
+
+    def on_pre_enter(self):
+        """."""
+        super().on_pre_enter()
+        self.listaSpnExemplar = []
+        self.idExemplar = ''
+        self.idUsuario = ''
+        self.ids.livrosSpn.text = "Livro"
+        self.ids.exemplarSpn.text = "Selecione Um Livro"
+        self.ids.usuariosSpn.text = "Usuario"
+        Clock.schedule_once(self.addLivro, .5)
+        Clock.schedule_once(self.addUsuario, .5)
+
+    def addLivro(self, dt):
+        """."""
+        self.listaSpnLivro = []
+        self.textoSpnLivro = "Livro"
+        livros = Emprestimo().select("SELECT id,titulo FROM livro", sel='fetchall')
+        if len(livros) > 0:
+            ll = []
+            for i in livros:
+                l = NovaString(i.titulo)
+                l.id = str(i.id)
+                ll.append(l)
+            self.listaSpnLivro = ll
+        else:
+            self.textoSpnLivro = "Não há Livros!"
+            self.listaSpnLivro = []
+
+    def escolheExemplar(self, args):
+        """."""
+        if len(args) > 1 and 'id' in dir(args[1]):
+            self.idExemplar = args[1].id
+
+    def addExemplar(self, args):
+        """."""
+        if len(args) > 1 and 'id' in dir(args[1]):
+            lid = args[1].id
+            self.listaSpnExemplar = []
+            self.ids.exemplarSpn.text = "Exemplares"
+            livros = Emprestimo().select(
+                """SELECT id,codigo FROM exemplar WHERE livro_id=%(lid)s
+                and disponivel=1""",
+                {'lid': lid},
+                sel='fetchall')
+            if len(livros) > 0:
+                ll = []
+                for i in livros:
+                    l = NovaString(i.codigo)
+                    l.id = str(i.id)
+                    ll.append(l)
+                self.listaSpnExemplar = ll
+            else:
+                self.ids.exemplarSpn.text = "Não há Exemplares!"
+                self.listaSpnExemplar = []
+
+    def addUsuario(self, dt):
+        """."""
+        self.listaSpnUsuario = []
+        self.textoSpnUsuario = "Usuario"
+        livros = Emprestimo().select("SELECT id,nome FROM usuario WHERE tipo=0", sel='fetchall')
+        if len(livros) > 0:
+            ll = []
+            for i in livros:
+                l = NovaString(i.nome)
+                l.id = str(i.id)
+                ll.append(l)
+            self.listaSpnUsuario = ll
+        else:
+            self.textoSpnUsuario = "Não há Usuarios!"
+            self.listaSpnUsuario = []
+
+    def emprestar(self):
+        """."""
+        p = PopupError()
+        err = 0
+        p.texto = ''
+        if self.idExemplar == '':
+            p.texto += "Selecione um Livro e Um Exemplar.\n"
+            err += 1
+        if self.idUsuario == '':
+            p.texto += "Selecione Um Usuario.\n"
+            err += 1
+        if err > 0:
+            p.titulo = "Erro!"
+            p.open()
+        else:
+            p.titulo = 'Sucesso!'
+            p.texto = 'Cadastrado Com Sucesso!'
+            p.funcao = self._mudaAoTerminar
+            e = Exemplar()
+            e.disponivel = 0
+            e.update('id', self.idExemplar)
+            e._op(
+                """
+                INSERT INTO emprestimo(usuario_id, exemplar_id, data_devolucao_estimada)
+                VALUES (%(idU)s, %(idE)s, DATE_ADD(CURRENT_TIMESTAMP, INTERVAL 1 MONTH))""",
+                {'idU': self.idUsuario, 'idE': self.idExemplar}
+                )
+            p.open()
+
+    def _mudaAoTerminar(self, instancia):
+        """."""
+        App.get_running_app().root.current = 'VerTodosemprestimos'
+        instancia.dismiss()
+
+
+class NovaString(str):
+    """."""
+
+    def __init__(self, dados):
+        """."""
+        # self.id = dados.id
+        self.titulo = dados
+
+    def __str__(self):
+        """."""
+        return self.titulo
+
+    def __repr__(self):
+        """."""
+        return self.titulo

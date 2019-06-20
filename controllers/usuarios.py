@@ -177,6 +177,7 @@ class UsuariosCadastrar(Tela):
             p.open()
 
     def _mudaAoTerminar(self, instancia):
+        """."""
         App.get_running_app().root.current = 'VerTodosusuarios'
         instancia.dismiss()
 

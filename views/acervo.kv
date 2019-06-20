@@ -36,7 +36,6 @@
             BoxLayout:
                 orientation: 'horizontal'
                 BoxLayout:
-                    # padding: 10
                     Label:
                         text: root.textoLabelTitulo
                         color: 0, 0, 0, 1
@@ -44,14 +43,16 @@
                         size_hint_y: None
                         size_hint_x: .2
                     TextInput:
-                        id: ti_default
+                        id: titulo
+                        text: root.textTitulo
                         size_hint_y: None
                         size_hint_x: .7
                         multiline: False
                         height: '32dp'
                         focus: True
+                        on_text:
+                            root.textTitulo = self.text
                 BoxLayout:
-                    # padding: 10
                     Label:
                         text: root.textoLabelAutor
                         color: 0, 0, 0, 1
@@ -59,15 +60,17 @@
                         size_hint_y: None
                         size_hint_x: .2
                     TextInput:
-                        id: ti_default
+                        id: autor
+                        text: root.textAutor
                         size_hint_y: None
                         size_hint_x: .7
                         multiline: False
                         height: '32dp'
+                        on_text:
+                            root.textAutor = self.text
             BoxLayout:
                 orientation: 'horizontal'
                 BoxLayout:
-                    # padding: 10
                     Label:
                         text: root.textoLabelUrl
                         color: 0, 0, 0, 1
@@ -75,14 +78,16 @@
                         size_hint_y: None
                         size_hint_x: .2
                     TextInput:
-                        id: ti_default
+                        id: url
+                        text: root.textUrl
                         size_hint_y: None
                         size_hint_x: .7
                         height: '32dp'
                         multiline: False
                         focus: True
+                        on_text:
+                            root.textUrl = self.text
                 BoxLayout:
-                    # padding: 10
                     Label:
                         text: root.textoLabelEditora
                         color: 0, 0, 0, 1
@@ -90,15 +95,17 @@
                         size_hint_y: None
                         size_hint_x: .2
                     TextInput:
-                        id: ti_default
+                        id: editora
+                        text: root.textEditora
                         size_hint_y: None
                         size_hint_x: .7
                         multiline: False
                         height: '32dp'
+                        on_text:
+                            root.textEditora = self.text
             BoxLayout:
                 orientation: 'horizontal'
                 BoxLayout:
-                    # padding: 10
                     Label:
                         text: root.textoLabelAno
                         color: 0, 0, 0, 1
@@ -106,13 +113,15 @@
                         size_hint_y: None
                         size_hint_x: .2
                     TextInput:
-                        id: ti_default
+                        id: ano
+                        text: root.textAno
                         size_hint_y: None
                         size_hint_x: .7
                         multiline: False
                         height: '32dp'
+                        on_text:
+                            root.validaAno()
                 BoxLayout:
-                    # padding: 10
                     Label:
                         text: root.textoLabelIdioma
                         color: 0, 0, 0, 1
@@ -120,15 +129,17 @@
                         size_hint_y: None
                         size_hint_x: .2
                     TextInput:
-                        id: ti_default
+                        id: idioma
+                        text: root.textIdioma
                         size_hint_y: None
                         size_hint_x: .7
                         multiline: False
                         height: '32dp'
+                        on_text:
+                            root.textIdioma = self.text
             BoxLayout:
                 orientation: 'horizontal'
                 BoxLayout:
-                    # padding: 10
                     Label:
                         text: root.textoLabelISBN
                         color: 0, 0, 0, 1
@@ -136,15 +147,17 @@
                         size_hint_y: None
                         size_hint_x: .2
                     TextInput:
-                        id: ti_default
+                        id: isbn
+                        text: root.textISBN
                         size_hint_y: None
                         size_hint_x: .7
                         multiline: False
                         height: '32dp'
+                        on_text:
+                            root.textISBN = self.text
             BoxLayout:
                 orientation: 'horizontal'
                 BoxLayout:
-                    # padding: 10
                     Label:
                         text: root.textoLabelDescricao
                         color: 0, 0, 0, 1
@@ -152,16 +165,21 @@
                         size_hint_y: None
                         size_hint_x: .2
                     TextInput:
-                        id: ti_default
+                        id: descricao
+                        text: root.textDescricao
                         size_hint_y: None
                         size_hint_x: .7
                         height: '60dp'
                         multiline: True
+                        on_text:
+                            root.textDescricao = self.text
             BoxLayout:
                 Button:
                     size_hint_y: .5
                     height: '32dp'
                     text: root.textoBotaoCadastrar
+                    on_release:
+                        root.cadLivro()
 
 <Exemplares>
     BoxLayout:
@@ -199,7 +217,6 @@
             orientation: 'vertical'
             padding: 10 
             BoxLayout:
-                # padding: 10
                 Label:
                     text: root.textoLabelLivro
                     color: 0, 0, 0, 1
@@ -213,9 +230,8 @@
                     height: '32dp' 
                     text: root.textoSpnLivro
                     on_text:
-                        print(args[1].id)
+                        root.escolheLivro(args)
             BoxLayout:
-                # padding: 10
                 Label:
                     text: root.textoLabelCodigo
                     color: 0, 0, 0, 1
@@ -223,13 +239,18 @@
                     size_hint_y: None
                     size_hint_x: .2
                 TextInput:
-                    id: ti_default
+                    id: codigoText
                     size_hint_y: None
+                    text: root.codigo
                     size_hint_x: .7
                     height: '32dp'
+                    on_text:
+                        root.codigo = self.text
             BoxLayout:
                 Button:
                     size_hint_y: .5
                     height: '32dp'
                     text: root.textoBotaoCadastrar
+                    on_release:
+                        root.cadastrarExemplar()
 
