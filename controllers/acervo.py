@@ -1,9 +1,9 @@
-"""."""
+"""Controller do Acervo."""
+from kivy.app import App
 from kivy.clock import Clock
 from kivy.metrics import sp
-from kivy.app import App
-from kivy.uix.button import Button
 from kivy.properties import StringProperty  # pylint: disable=no-name-in-module
+from kivy.uix.button import Button
 
 from models.exemplar import Exemplar  # pylint: disable=import-error
 from models.livro import Livro  # pylint: disable=import-error
@@ -14,15 +14,15 @@ from .telaBase import Tela  # pylint: disable=relative-beyond-top-level
 
 
 class Livros(Tela):
-    """."""
+    """Tela dos Livros."""
 
     def on_pre_enter(self, *args, **kwargs):
-        """."""
+        """Executa antes de Entrar na Tela."""
         super().on_pre_enter()
         Clock.schedule_once(self.addLivro, .5)
 
     def addLivro(self, dt):
-        """."""
+        """Adicionar Livros na Tela."""
         self.ids.box.clear_widgets()
         livros = Livro().select("SELECT id, titulo, autor FROM livro", sel='fetchall')
         if len(livros) > 0:
@@ -45,7 +45,7 @@ class Livros(Tela):
             self.ids.box.add_widget(ex)
 
     def atualizar(self, instancia):
-        """."""
+        """Função do Botão Atualizar."""
         livro = Livro().select(
             "SELECT * FROM livro WHERE id = %(id)s",
             {'id': instancia.idL}
@@ -64,7 +64,7 @@ class Livros(Tela):
         root.current_screen.ids.nomeBotao.text = "Atualizar"
 
     def deletar(self, instancia):
-        """."""
+        """Função do Botão Deletar."""
         p = PopupError()
         p.titulo = "Deseja Realmente Excluir?"
         p.size_hint_y = .2
@@ -83,14 +83,14 @@ class Livros(Tela):
         p.open()
 
     def del_troca(self, ins, popup):
-        """."""
+        """Função auxiliar para Deletar."""
         popup.dismiss()
         Livro().delete('id', ins.idL)
         App.get_running_app().root.current_screen.on_pre_enter()
 
 
 class LivrosCadastrar(Tela):
-    """."""
+    """Tela de Cadastrar Livros."""
 
     textoBotaoCadastrar = StringProperty("Cadastrar")
 
@@ -113,7 +113,7 @@ class LivrosCadastrar(Tela):
     textDescricao = StringProperty('')
 
     def on_pre_enter(self, *args, **kwargs):
-        """."""
+        """Executa antes de Entrar na Tela."""
         super().on_pre_enter()
         self.ids.titulo.text = ''
         self.ids.autor.text = ''
@@ -126,7 +126,7 @@ class LivrosCadastrar(Tela):
         self.ids.nomeBotao.text = 'Cadastrar'
 
     def validaAno(self):
-        """."""
+        """Validar se ano é valido."""
         self.ids.ano.text = ''.join(
             list(
                 filter(
@@ -138,7 +138,7 @@ class LivrosCadastrar(Tela):
         self.textAno = self.ids.ano.text
 
     def cadLivro(self):
-        """."""
+        """Cadastrar o Livro se não tiver erro."""
         p = PopupError()
         err = 0
         p.texto = ''
@@ -190,21 +190,21 @@ class LivrosCadastrar(Tela):
             p.open()
 
     def _mudaAoTerminar(self, instancia):
-        """."""
+        """Troca de Tela depois de Cadastrar."""
         App.get_running_app().root.current = 'Livrosacervo'
         instancia.dismiss()
 
 
 class Exemplares(Tela):
-    """."""
+    """Tela Exemplares."""
 
     def on_pre_enter(self, *args, **kwargs):
-        """."""
+        """Executa antes de Entrar na Tela."""
         super().on_pre_enter()
         Clock.schedule_once(self.addEx, .5)
 
     def addEx(self, dt):
-        """."""
+        """Adiciona Exemplares na Tela."""
         self.ids.box.clear_widgets()
         livros = Exemplar().select(
             """
@@ -234,7 +234,7 @@ class Exemplares(Tela):
             self.ids.box.add_widget(ex)
 
     def atualizar(self, instancia):
-        """."""
+        """Função Botão Atualizar."""
         exemplar = Exemplar().select(
             "SELECT l.id as idLivro, l.titulo, e.id, e.codigo FROM exemplar e "
             "JOIN livro l ON l.id=e.livro_id WHERE e.id = %(id)s",
@@ -249,7 +249,7 @@ class Exemplares(Tela):
         root.current_screen.ids.nomeBotao.text = "Atualizar"
 
     def deletar(self, instancia):
-        """."""
+        """Função Botão Deletar."""
         p = PopupError()
         p.titulo = "Deseja Realmente Excluir?"
         p.size_hint_y = .2
@@ -268,14 +268,14 @@ class Exemplares(Tela):
         p.open()
 
     def del_troca(self, ins, popup):
-        """."""
+        """Função Auxiliar Botão Deletar."""
         popup.dismiss()
         Exemplar().delete('id', ins.idEx)
         App.get_running_app().root.current_screen.on_pre_enter()
 
 
 class ExemplaresCadastrar(Tela):
-    """."""
+    """Tela Cadastrar Exemplar."""
 
     textoBotaoCadastrar = StringProperty("Cadastrar")
 
@@ -288,7 +288,7 @@ class ExemplaresCadastrar(Tela):
     codigo = StringProperty('')
 
     def on_pre_enter(self):
-        """."""
+        """Executa antes de Entrar na Tela."""
         super().on_pre_enter()
         self.idLivro = ''
         self.codigo = ''
@@ -298,7 +298,7 @@ class ExemplaresCadastrar(Tela):
         Clock.schedule_once(self.addLivro, .5)
 
     def addLivro(self, dt):
-        """."""
+        """Adiciona Livros ao Spinner."""
         self.ids.livrosSpn.values = []
         livros = Livro().select("SELECT id,titulo FROM livro", sel='fetchall')
         if len(livros) > 0:
@@ -313,12 +313,12 @@ class ExemplaresCadastrar(Tela):
             self.ids.livrosSpn.values = []
 
     def escolheLivro(self, args):
-        """."""
+        """Função para Escolher o Livro."""
         if len(args) > 1 and 'id' in dir(args[1]):
             self.idLivro = args[1].id
 
     def cadastrarExemplar(self):
-        """."""
+        """Função para Cadastrar livro se as informações tiverem Corretas."""
         p = PopupError()
         err = 0
         p.texto = ''
@@ -346,23 +346,22 @@ class ExemplaresCadastrar(Tela):
             p.open()
 
     def _mudaAoTerminar(self, instancia):
-        """."""
+        """Muda de tela ao terminar de Cadastrar."""
         App.get_running_app().root.current = 'Exemplaresacervo'
         instancia.dismiss()
 
 
 class livroString(str):
-    """."""
+    """String Especial dos Livros."""
 
     def __init__(self, dados):
-        """."""
-        # self.id = dados.id
+        """Inicia a String."""
         self.titulo = dados
 
     def __str__(self):
-        """."""
+        """Retorna o Titulo."""
         return self.titulo
 
     def __repr__(self):
-        """."""
+        """Retorna o Titulo."""
         return self.titulo

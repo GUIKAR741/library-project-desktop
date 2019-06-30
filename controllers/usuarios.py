@@ -1,4 +1,4 @@
-"""."""
+"""Controller do Usuario."""
 from kivy.app import App
 from kivy.clock import Clock
 from kivy.metrics import sp
@@ -14,15 +14,15 @@ from .telaBase import Tela  # pylint: disable=relative-beyond-top-level
 
 
 class Usuarios(Tela):
-    """."""
+    """Tela Usuarios."""
 
     def on_pre_enter(self, *args, **kwargs):
-        """."""
+        """Executa antes de Entrar na Tela."""
         super().on_pre_enter()
         Clock.schedule_once(self.addUsuarios, .5)
 
     def addUsuarios(self, dt):
-        """."""
+        """Adiciona os Usuarios na Tela."""
         self.ids.box.clear_widgets()
         usuarios = Usuario().select(
             """
@@ -52,7 +52,7 @@ class Usuarios(Tela):
             self.ids.box.add_widget(ex)
 
     def atualizar(self, instancia):
-        """."""
+        """Função do Botão Atualizar."""
         user = Usuario().select(
             "SELECT * FROM usuario WHERE id = %(id)s",
             {'id': instancia.idUser}
@@ -70,7 +70,7 @@ class Usuarios(Tela):
         root.current_screen.ids.nomeBotao.text = "Atualizar"
 
     def deletar(self, instancia):
-        """."""
+        """Função do Botao Deletar."""
         p = PopupError()
         p.titulo = "Deseja Realmente Excluir?"
         p.size_hint_y = .2
@@ -89,7 +89,7 @@ class Usuarios(Tela):
         p.open()
 
     def del_troca(self, ins, popup):
-        """."""
+        """Função auxiliar para Deletar."""
         popup.dismiss()
         runApp = App.get_running_app()
         if ins.idUser != runApp.root.idUsuario:
@@ -103,7 +103,7 @@ class Usuarios(Tela):
 
 
 class UsuariosCadastrar(Tela):
-    """."""
+    """Tela de Cadastrar Usuario."""
 
     nomeBotao = StringProperty('Cadastrar')
 
@@ -125,13 +125,13 @@ class UsuariosCadastrar(Tela):
     user = BooleanProperty(True)
 
     def on_pre_enter(self):
-        """."""
+        """Executa antes de Entrar na Tela."""
         super().on_pre_enter()
         self.ids.cpf.bind(text=self.cpf_val)
         self.ids.telefone.bind(text=self.telefone_val)
 
     def val_form(self):
-        """."""
+        """Valida o Formulario e Cadastra o Usuario."""
         u = Usuario()
         u.nome = self.ids.nome.text
         filemail = list(filter(lambda x: x == '@' or x ==
@@ -177,12 +177,12 @@ class UsuariosCadastrar(Tela):
             p.open()
 
     def _mudaAoTerminar(self, instancia):
-        """."""
+        """Muda de Tela ao Terminar."""
         App.get_running_app().root.current = 'VerTodosusuarios'
         instancia.dismiss()
 
     def cpf_val(self, ins, val):
-        """."""
+        """Mascara do Cpf."""
         txt = ''.join(
             list(filter(lambda z: z.isdigit(), ins.text))[:11])
         texto = ''
@@ -203,7 +203,7 @@ class UsuariosCadastrar(Tela):
         ins.text = texto
 
     def telefone_val(self, ins, val):
-        """."""
+        """Mascara do Telefone."""
         txt = ''.join(
             list(filter(lambda z: z.isdigit(), ins.text))[:11])
         texto = ''

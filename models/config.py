@@ -1,4 +1,4 @@
-"""."""
+"""Configurações de Conexao com o Banco."""
 MYSQL_DATABASE_HOST = 'localhost'
 MYSQL_DATABASE_PORT = 3306
 MYSQL_DATABASE_USER = 'guilherme'

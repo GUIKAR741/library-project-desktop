@@ -1,4 +1,4 @@
-"""."""
+"""Controller das Reservas."""
 from kivy.clock import Clock
 from kivy.metrics import sp
 from kivy.uix.button import Button
@@ -10,15 +10,15 @@ from .telaBase import Tela  # pylint: disable=relative-beyond-top-level
 
 
 class Reservas(Tela):
-    """."""
+    """Tela Reservas."""
 
     def on_pre_enter(self, *args, **kwargs):
-        """."""
+        """Executa antes de Entrar na Tela."""
         super().on_pre_enter()
         Clock.schedule_once(self.addReservas, .5)
 
     def addReservas(self, dt):
-        """."""
+        """Adiciona Reservas na Tela."""
         self.ids.box.clear_widgets()
         livros = Reserva().select(
             """SELECT u.nome, l.titulo, r.data FROM reserva r

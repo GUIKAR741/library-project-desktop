@@ -134,4 +134,5 @@ class Model(object):
         return model
 
     def _op(self, sqlstr, campos):
+        """Executa QUERY SQL."""
         return sql().operacao(sqlstr, campos)

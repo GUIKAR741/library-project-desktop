@@ -1,4 +1,4 @@
-"""."""
+"""Controller da Tela de Login."""
 from kivy.animation import Animation
 from kivy.app import App
 from kivy.core.window import Window
@@ -15,7 +15,7 @@ from .popuperror import PopupError  # pylint: disable=relative-beyond-top-level
 
 
 class Login(Screen):
-    """."""
+    """Tela de Login."""
 
     textoEmail = StringProperty('Email:')
     textoSenha = StringProperty('Senha:')
@@ -25,7 +25,7 @@ class Login(Screen):
     senha = StringProperty('')
 
     def fazerLogin(self):
-        """."""
+        """Função para Fazer login na Aplicação."""
         p = PopupError()
         p.titulo = "Erro ao Logar!"
         p.texto = ""
@@ -50,11 +50,11 @@ class Login(Screen):
             p.open()
 
     def on_pre_enter(self):
-        """."""
+        """Executa antes de Entrar na Tela."""
         Window.bind(on_request_close=self.confirmacao)
 
     def confirmacao(self, *args, **kwargs):
-        """."""
+        """Popup de Confirmação de Saida."""
         box = BoxLayout(orientation='vertical', padding=10, spacing=10)
         botoes = BoxLayout(padding=10, spacing=10)
 

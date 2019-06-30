@@ -1,4 +1,4 @@
-"""."""
+"""Controller da Tela de Menu."""
 from kivy.properties import StringProperty  # pylint: disable=no-name-in-module
 from kivy.uix.screenmanager import Screen
 
@@ -6,7 +6,7 @@ from models.emprestimo import Emprestimo  # pylint: disable=import-error
 
 
 class Menu(Screen):
-    """."""
+    """Tela de Menu."""
 
     emprestimos = StringProperty()
     reservas = StringProperty()
@@ -14,7 +14,7 @@ class Menu(Screen):
     usuarios = StringProperty()
 
     def __init__(self, *args, **kwargs):
-        """."""
+        """Inicializa o Menu e Escreve as Informações."""
         super().__init__(*args, **kwargs)
 
         total = Emprestimo().select("SELECT count(id) as usr FROM usuario")

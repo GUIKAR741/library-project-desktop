@@ -1,9 +1,10 @@
-"""."""
+"""Controller dos Emprestimos."""
 from kivy.app import App
 from kivy.clock import Clock
 from kivy.metrics import sp
+from kivy.properties import (ListProperty,  # pylint: disable=no-name-in-module
+                             StringProperty)
 from kivy.uix.button import Button
-from kivy.properties import StringProperty, ListProperty  # pylint: disable=no-name-in-module
 
 from models.devolucao import Devolucao  # pylint: disable=import-error
 from models.emprestimo import Emprestimo  # pylint: disable=import-error
@@ -16,15 +17,15 @@ from .telaBase import Tela  # pylint: disable=relative-beyond-top-level
 
 
 class Emprestimos(Tela):
-    """."""
+    """Tela Emprestimos."""
 
     def on_pre_enter(self, *args, **kwargs):
-        """."""
+        """Executa antes de Entrar na Tela."""
         super().on_pre_enter()
         Clock.schedule_once(self.addEmp, 0.5)
 
     def addEmp(self, dt):
-        """."""
+        """Adicionar Emprestimos na Tela."""
         self.ids.box.clear_widgets()
         livros = Emprestimo().select(
             """
@@ -62,7 +63,7 @@ class Emprestimos(Tela):
             self.ids.box.add_widget(ex)
 
     def renovar(self, ins):
-        """."""
+        """Renova Emprestimo do Livro."""
         p = PopupError()
         p.titulo = "Deseja Realmente Renovar?"
         p.size_hint_y = .2
@@ -81,7 +82,7 @@ class Emprestimos(Tela):
         p.open()
 
     def ren_sim(self, ins, p):
-        """."""
+        """Função auxiliar para Renovação."""
         p.dismiss()
         e = Emprestimo()
         e._op(
@@ -95,7 +96,7 @@ class Emprestimos(Tela):
         App.get_running_app().root.current_screen.on_pre_enter()
 
     def devolver(self, ins):
-        """."""
+        """Devolve o Livro."""
         p = PopupError()
         p.titulo = "Deseja Realmente Devolver?"
         p.size_hint_y = .2
@@ -114,7 +115,7 @@ class Emprestimos(Tela):
         p.open()
 
     def dev_sim(self, ins, p):
-        """."""
+        """Função auxiliar para Devolver o Livro."""
         p.dismiss()
         e = Emprestimo()
         e.status = 1
@@ -130,15 +131,15 @@ class Emprestimos(Tela):
 
 
 class Devolucoes(Tela):
-    """."""
+    """Tela Devoluções."""
 
     def on_pre_enter(self, *args, **kwargs):
-        """."""
+        """Executa antes de Entrar na Tela."""
         super().on_pre_enter()
         Clock.schedule_once(self.addDev, 0.5)
 
     def addDev(self, dt):
-        """."""
+        """Adiciona Devoluções na Tela."""
         self.ids.box.clear_widgets()
         devolucoes = Devolucao().select(
             """
@@ -175,7 +176,7 @@ class Devolucoes(Tela):
 
 
 class Emprestar(Tela):
-    """."""
+    """Tela Emprestar."""
 
     textoBotaoEmprestar = StringProperty("Emprestar")
 
@@ -196,7 +197,7 @@ class Emprestar(Tela):
     idUsuario = StringProperty('')
 
     def on_pre_enter(self):
-        """."""
+        """Executa antes de Entrar na Tela."""
         super().on_pre_enter()
         self.listaSpnExemplar = []
         self.idExemplar = ''
@@ -209,7 +210,7 @@ class Emprestar(Tela):
         Clock.schedule_once(self.addUsuario, .5)
 
     def addLivro(self, dt):
-        """."""
+        """Adiciona Livros no Spinner."""
         self.listaSpnLivro = []
         self.textoSpnLivro = "Livro"
         livros = Emprestimo().select("SELECT id,titulo FROM livro", sel='fetchall')
@@ -225,12 +226,12 @@ class Emprestar(Tela):
             self.listaSpnLivro = []
 
     def escolheExemplar(self, args):
-        """."""
+        """Escolhe Exemplar do Spinner."""
         if len(args) > 1 and 'id' in dir(args[1]):
             self.idExemplar = args[1].id
 
     def addExemplar(self, args):
-        """."""
+        """Adiciona Exemplares no Spinner."""
         if len(args) > 1 and 'id' in dir(args[1]):
             lid = args[1].id
             self.idLivro = str(lid)
@@ -253,7 +254,7 @@ class Emprestar(Tela):
                 self.listaSpnExemplar = []
 
     def addUsuario(self, dt):
-        """."""
+        """Adiciona Usuarios no Spinner."""
         self.listaSpnUsuario = []
         self.textoSpnUsuario = "Usuario"
         livros = Emprestimo().select("SELECT id,nome FROM usuario WHERE tipo=0", sel='fetchall')
@@ -269,7 +270,7 @@ class Emprestar(Tela):
             self.listaSpnUsuario = []
 
     def emprestar(self):
-        """."""
+        """Faz o Emprestimo do Livro."""
         p = PopupError()
         err = 0
         p.texto = ''
@@ -309,23 +310,22 @@ class Emprestar(Tela):
             p.open()
 
     def _mudaAoTerminar(self, instancia):
-        """."""
+        """Muda ao Terminar o Emprestimo."""
         App.get_running_app().root.current = 'VerTodosemprestimos'
         instancia.dismiss()
 
 
 class NovaString(str):
-    """."""
+    """String Auxiliar para o Emprestimo."""
 
     def __init__(self, dados):
-        """."""
-        # self.id = dados.id
+        """Inicializa a String."""
         self.titulo = dados
 
     def __str__(self):
-        """."""
+        """Retorna o Titulo."""
         return self.titulo
 
     def __repr__(self):
-        """."""
+        """Retorna o Titulo."""
         return self.titulo

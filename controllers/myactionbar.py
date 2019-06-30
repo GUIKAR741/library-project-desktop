@@ -1,12 +1,8 @@
-"""."""
+"""Controller Componente MyActionBar."""
 from kivy.app import App
 from kivy.metrics import sp
 from kivy.properties import (  # pylint: disable=no-name-in-module
-    BooleanProperty,
-    Property,
-    StringProperty,
-    ListProperty
-)
+    BooleanProperty, ListProperty, Property, StringProperty)
 from kivy.uix.actionbar import ActionBar
 from kivy.uix.button import Button
 
@@ -14,7 +10,7 @@ from .popuperror import PopupError  # pylint: disable=relative-beyond-top-level
 
 
 class MyActionBar(ActionBar):
-    """."""
+    """Customização da ActionBar."""
 
     textoLogo = StringProperty("SYML")
     textoUsuarios = StringProperty("Usuarios")
@@ -33,12 +29,8 @@ class MyActionBar(ActionBar):
     prev = BooleanProperty(False)
     func = Property(lambda: ...)
 
-    def __init__(self, *args, **kwargs):
-        """."""
-        super().__init__(*args, **kwargs)
-
     def usuario(self, args):
-        """."""
+        """Função para escolher opção do botão Usuario."""
         if args[1] != 'Usuarios':
             root = App.get_running_app().root
             root.current = args[1].replace(' ', '')+"usuarios"
@@ -56,7 +48,7 @@ class MyActionBar(ActionBar):
                 root.current_screen.on_pre_enter()
 
     def acervo(self, args):
-        """."""
+        """Função para escolher opção do botão Acervo."""
         if args[1] != 'Acervo':
             root = App.get_running_app().root
             root.current = args[1].replace(' ', '')+"acervo"
@@ -64,7 +56,7 @@ class MyActionBar(ActionBar):
             root.current_screen.on_pre_enter()
 
     def reserva(self, args):
-        """."""
+        """Função para escolher opção do botão Reserva."""
         if args[1] != 'Reservas':
             root = App.get_running_app().root
             root.current = args[1].replace(' ', '')+"reservas"
@@ -72,7 +64,7 @@ class MyActionBar(ActionBar):
             root.current_screen.on_pre_enter()
 
     def emprestimo(self, args):
-        """."""
+        """Função para escolher opção do botão Emprestimo."""
         if args[1] != 'Emprestimos':
             root = App.get_running_app().root
             root.current = args[1].replace(' ', '')+"emprestimos"
@@ -80,7 +72,7 @@ class MyActionBar(ActionBar):
             root.current_screen.on_pre_enter()
 
     def sair(self):
-        """."""
+        """Função para Sair do Aplicativo."""
         p = PopupError()
         p.titulo = "Deseja Realmente Sair?"
         p.size_hint_y = .2
@@ -111,7 +103,7 @@ class MyActionBar(ActionBar):
         p.open()
 
     def _sair_func(self, p):
-        """."""
+        """Função Auxiliar para Sair."""
         p.dismiss()
         root = App.get_running_app().root
         root.current = 'login'

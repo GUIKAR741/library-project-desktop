@@ -1,19 +1,19 @@
-"""."""
+"""Modulo com o Model Usuario."""
 from . import Model
 from passlib.hash import pbkdf2_sha256
 
 
 class Usuario(Model):
-    """Model da Tabela ."""
+    """Model da Tabela Usuario."""
 
     def __init__(self, lista: dict = {}):
-        """."""
+        """Inicia o Model."""
         super().__init__(lista)
         self.__table__ = 'usuario'
         self.__pk__ = 'id'
 
     def procurarUsuarioPeloEmail(self, email: str):
-        """."""
+        """Verifica se Existe Usuario."""
         usuario = self.select(
             'select * from usuario where email = %(email)s',
             {'email': email}
