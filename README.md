@@ -1,4 +1,4 @@
-# library-project-desktop
+# Library Project Desktop
 Aplicativo Desktop Biblioteca
 
 ## Bibliotecas Utilizadas
